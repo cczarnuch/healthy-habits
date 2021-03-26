@@ -1,0 +1,12 @@
+{
+  "name": "HealthyHabits",
+  "displayName": "HealthyHabits",
+  "expo": {
+    "name": "HealthyHabits",
+    "slug": "HealthyHabits",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
