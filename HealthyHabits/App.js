@@ -13,9 +13,10 @@ const App = () => {
       showsPagination={false}
       index={1}
     >
-      <GameDisplay styles={styles}/>
-      <MountainView styles={styles}/>   
+      
       <Calendar styles={styles}/>
+      <MountainView styles={styles}/>
+      <GameDisplay styles={styles}/>   
     </Swiper>
   );
 }
