@@ -1,13 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
+import Swiper from 'react-native-swiper/src'
+import Calendar from './src/components/Calendar'
+import MountainView from './src/components/MountainView'
+import GameDisplay from './src/components/GameDisplay'
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Swiper
+      loop={false}
+      showsPagination={false}
+      index={1}
+    >
+      <GameDisplay styles={styles}/>
+      <MountainView styles={styles}/>   
+      <Calendar styles={styles}/>
+    </Swiper>
   );
 }
 
@@ -19,3 +28,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App
