@@ -9,5 +9,9 @@ export default StyleSheet.create({
     },
     settingsButton: {
         backgroundColor: 'red',
+    },
+    img: {
+        width: '100%', 
+        height: '100%'
     }
 })
