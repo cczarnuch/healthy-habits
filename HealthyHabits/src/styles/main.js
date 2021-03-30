@@ -11,7 +11,14 @@ export default StyleSheet.create({
         backgroundColor: 'red',
     },
     img: {
-        width: '100%', 
-        height: '100%'
-    }
+        flex: 1,
+        height: '100%',
+        width: '100%'
+    },
+    man: {
+        width: 60,
+        height: 60,
+        marginTop: 260,
+        marginLeft: 35
+    },
 })
