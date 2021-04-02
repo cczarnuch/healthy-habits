@@ -8,9 +8,20 @@ import {Ionicons} from '@expo/vector-icons';
 export default class MemoryGame extends Component {
   constructor(props){
     super(props);
+    
+    this.state = {
+      current_selection: [],
+      selected_pairs: [],
+      cardsPerDiff: [8,10,12],
+      diffculty: 0,
+      score: 0,
+      deck: [],
+    }
+  }
 
+  componentDidMount(){
     let source = {'ionicons': Ionicons};
-    let cards = [
+    let pool = [
       {src: 'ionicons', name: 'baseball', color: '#bebfa4'},
       {src: 'ionicons', name: 'heart', color: 'red'},
       {src: 'ionicons', name: 'calendar', color: '#497dde'},
@@ -24,25 +35,25 @@ export default class MemoryGame extends Component {
       {src: 'ionicons', name: 'walk', color: 'black'},
       {src: 'ionicons', name: 'tennisball', color: '#b9d444'}
     ];
-    let clone = JSON.parse(JSON.stringify(cards));
 
-    this.cards = cards.concat(clone);
-    this.cards.map((obj) => {
+    let cards = pool.slice(0,this.state.cardsPerDiff[this.state.diffculty])
+    let clone = JSON.parse(JSON.stringify(cards));
+    let deck = cards.concat(clone);
+    deck.map((obj) => {
       let id = Math.random().toString(36).substring(7);
       obj.id = id;
       obj.src = source[obj.src];
       obj.reveal = false;
     });
 
-    this.cards = this.cards.shuffle(); 
-    this.state = {
+    deck = deck.shuffle(); 
+    this.setState({
       current_selection: [],
       selected_pairs: [],
-      diffculty: 0,
-      score: 0,
-      cards: this.cards
-    }
+      deck: deck,
+    },() => console.log(deck.length));
   }
+
   render() {
     console.log("hi");
     return (
