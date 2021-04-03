@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import {Overlay} from 'react-native-elements';
 import {Ionicons} from '@expo/vector-icons';
 
 /*###########################################################################
@@ -26,6 +27,7 @@ export default class MemoryGame extends Component {
       timer: null,
       counter: '00',
       miliseconds: '00',
+      visible: false,
     }
   }
 
@@ -73,13 +75,16 @@ export default class MemoryGame extends Component {
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={50}></Ionicons>
-          <Text style={styles.counter}>{this.state.counter}
+          <Text style={styles.counter}>Score: {this.state.counter}
             <Text style={styles.miniCounter}>.{this.state.miliseconds}</Text>
           </Text>
         </View>
         <View style={styles.body}>
           {this.renderRows.call(this)}
         </View>
+        <Overlay isVisible={this.state.visible} overlayStyle={{height: 50}}>
+          <Text>Score: {this.state.counter}{this.state.miliseconds}</Text>
+        </Overlay>
         {/* <View style={styles.pad}></View> */}
       </View>
     );
@@ -121,6 +126,7 @@ export default class MemoryGame extends Component {
     let index = this.state.deck.findIndex((card) => {return card.id == id;});
     let prevIndex = 0;
     let deck = this.state.deck;
+    let visible = this.state.visible;
     
     if(deck[index].reveal == false && selected_pairs.indexOf(deck[index].name) === -1){
       deck[index].reveal = true;
@@ -132,7 +138,10 @@ export default class MemoryGame extends Component {
       if(current_selection.length == 2){
         if(current_selection[0].name == current_selection[1].name){
           found += 1;
-          if (found === this.state.cardsPerDiff[this.state.diffculty]){this.stop();}
+          if (found === this.state.cardsPerDiff[this.state.diffculty]){
+            this.stop();
+            visible = true;
+          }
           selected_pairs.push(deck[index].name);
         }else{
           prevIndex = current_selection[0].index
@@ -148,6 +157,7 @@ export default class MemoryGame extends Component {
       }
 
       this.setState({
+        visible: visible,
         found: found,
         deck: deck,
         current_selection: current_selection,
@@ -292,7 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#a1cfce",
   },
   counter: {
-    flex: 3,
+    flex: 5,
     fontSize: 60,
     textAlign: 'left',
     height: 60,
@@ -305,7 +315,10 @@ const styles = StyleSheet.create({
     right: -50
   },
   back:{ 
-    flex: 2,
+    flex: 1,
     alignSelf: 'flex-start',
-  },  
+  },
+  endScreen: {
+    height: 30,
+  },
 });
