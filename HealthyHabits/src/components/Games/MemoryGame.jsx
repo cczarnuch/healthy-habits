@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import {Ionicons, FontAwesome} from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 /*###########################################################################
                               Main
@@ -12,7 +12,7 @@ export default class MemoryGame extends Component {
       current_selection: [],
       selected_pairs: [],
       cardsPerDiff: [8,10,12],
-      diffculty: 0,
+      diffculty: 2,
       score: 0,
       deck: [],
     }
@@ -20,20 +20,19 @@ export default class MemoryGame extends Component {
 
   //Initialize the deck of cards based on diffculty
   componentDidMount(){
-    let source = {'ionicons': Ionicons};
     let pool = [
-      {src: 'ionicons', name: 'baseball', color: '#bebfa4'},
-      {src: 'ionicons', name: 'heart', color: 'red'},
-      {src: 'ionicons', name: 'calendar', color: '#497dde'},
-      {src: 'ionicons', name: 'pulse', color: 'black'},
-      {src: 'ionicons', name: 'barbell', color: 'black'},
-      {src: 'ionicons', name: 'american-football', color: 'brown'},
-      {src: 'ionicons', name: 'basketball', color: '#FA8320'},
-      {src: 'ionicons', name: 'bicycle', color: '#2e29c4'},
-      {src: 'ionicons', name: 'football', color: 'black'},
-      {src: 'ionicons', name: 'nutrition', color: 'red'},
-      {src: 'ionicons', name: 'walk', color: 'black'},
-      {src: 'ionicons', name: 'tennisball', color: '#b9d444'}
+      {name: 'baseball', color: '#bebfa4'},
+      {name: 'heart', color: 'red'},
+      {name: 'calendar', color: '#497dde'},
+      {name: 'pulse', color: 'black'},
+      {name: 'barbell', color: 'black'},
+      {name: 'american-football', color: 'brown'},
+      {name: 'basketball', color: '#FA8320'},
+      {name: 'bicycle', color: '#2e29c4'},
+      {name: 'football', color: 'black'},
+      {name: 'nutrition', color: 'red'},
+      {name: 'walk', color: 'black'},
+      {name: 'tennisball', color: '#b9d444'}
     ];
 
     let cards = pool.slice(0,this.state.cardsPerDiff[this.state.diffculty])
@@ -42,7 +41,6 @@ export default class MemoryGame extends Component {
     deck.map((obj) => {
       let id = Math.random().toString(36).substring(7);
       obj.id = id;
-      obj.src = source[obj.src];
       obj.reveal = false;
     });
 
@@ -57,9 +55,11 @@ export default class MemoryGame extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.score}><Text>Score</Text></View>
         <View style={styles.body}>
           {this.renderRows.call(this)}
         </View>
+        <View style={styles.timer}><Text>Timer</Text></View>
       </View>
     );
   }
@@ -133,7 +133,6 @@ export default class MemoryGame extends Component {
     }
   }
 
-
   //Sends back a deck with 4 cards per row
   getRowContents(deck) {
     let board = [];
@@ -176,22 +175,23 @@ class Card extends React.Component {
 	}
 
 	render() {
-		let CardSource = FontAwesome;
-		let icon_name = 'question-circle';
-		let icon_color = '#393939';
-		
+		let icon_name = 'help';
+		let icon_color = '#fff';
+		let faceUp = false
+
 		if(this.props.reveal){
-			CardSource = this.props.src;
 			icon_name = this.props.name;
 			icon_color = this.props.color;
+      faceUp = true
 		}
 		return (
 			<View style={styles.card}>
 				<TouchableHighlight onPress={this.props.clickCard} activeOpacity={0.75} underlayColor={"#f1f1f1"}>
-					<CardSource 
+					<Ionicons 
 						name={icon_name} 
-						size={50} 
+						size={80} 
 						color={icon_color} 
+            style={[faceUp ? styles.faceUp : styles.faceDown]}
 					/>
 				</TouchableHighlight>		
 			</View>
@@ -214,17 +214,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   body: {
-    flex: 18,
-    justifyContent: 'space-between',
+    flex: 10,
+    justifyContent: 'space-around',
     padding: 10,
-    marginTop: 20
+    marginTop: 20,
   },
   card: {
     flex: 1,
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	card_text: {
 		fontSize: 50,
 		fontWeight: 'bold'
-	}
+	},
+  score: {
+    flex: 1,
+		alignItems: 'center',
+    marginTop: 75,
+  },
+  timer: {
+    flex: 1,
+		alignItems: 'center',
+    marginBottom: 50,
+  },
+  faceUp:{
+    borderColor: "#6f4f0f",
+    borderWidth: 3,
+    borderRadius: 5,
+    backgroundColor: "#63afae",
+  },
+  faceDown:{
+    borderColor: "#6f4f0f",
+    borderWidth: 3,
+    borderRadius: 5,
+    backgroundColor: "#a1cfce",
+  },
 });
