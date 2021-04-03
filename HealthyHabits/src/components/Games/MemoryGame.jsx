@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -8,13 +8,24 @@ import {Ionicons} from '@expo/vector-icons';
 export default class MemoryGame extends Component {
   constructor(props){
     super(props);
+
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+
     this.state = {
       current_selection: [],
       selected_pairs: [],
       cardsPerDiff: [8,10,12],
-      diffculty: 2,
+      diffculty: 0,
       score: 0,
+      found: 0,
+      runningTime: 0,
       deck: [],
+      stop: true,
+      start: false,
+      timer: null,
+      counter: '00',
+      miliseconds: '00',
     }
   }
 
@@ -50,16 +61,25 @@ export default class MemoryGame extends Component {
       selected_pairs: [],
       deck: deck,
     },() => console.log(deck.length));
+    this.start();
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.state.timer);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.score}><Text>Score</Text></View>
+        <View style={styles.score}>
+          <Text style={styles.counter}>{this.state.counter}
+            <Text style={styles.miniCounter}>.{this.state.miliseconds}</Text>
+          </Text>
+        </View>
         <View style={styles.body}>
           {this.renderRows.call(this)}
         </View>
-        <View style={styles.timer}><Text>Timer</Text></View>
+        {/* <View style={styles.pad}></View> */}
       </View>
     );
   }
@@ -96,9 +116,9 @@ export default class MemoryGame extends Component {
   clickCard(id) {
     let selected_pairs = this.state.selected_pairs;
     let current_selection = this.state.current_selection;
-    //let score = this.state.score;
+    let found = this.state.found;
     let index = this.state.deck.findIndex((card) => {return card.id == id;});
-    let prevIndex = 0
+    let prevIndex = 0;
     let deck = this.state.deck;
     
     if(deck[index].reveal == false && selected_pairs.indexOf(deck[index].name) === -1){
@@ -110,7 +130,8 @@ export default class MemoryGame extends Component {
 
       if(current_selection.length == 2){
         if(current_selection[0].name == current_selection[1].name){
-          //score += 1;
+          found += 1;
+          if (found === this.state.cardsPerDiff[this.state.diffculty]){this.stop();}
           selected_pairs.push(deck[index].name);
         }else{
           prevIndex = current_selection[0].index
@@ -120,13 +141,13 @@ export default class MemoryGame extends Component {
             this.setState({
               deck: deck
             });
-          }, 750);
+          }, 500);
         }
         current_selection = [];
       }
 
       this.setState({
-        //score: score,
+        found: found,
         deck: deck,
         current_selection: current_selection,
       });
@@ -149,6 +170,27 @@ export default class MemoryGame extends Component {
     });
     return board;
   }
+
+/*###########################################################################
+                              Stopwatch
+###########################################################################*/
+  start() {
+    let timer = setInterval(() => {
+      var num = (Number(this.state.miliseconds) + 1).toString(),
+      count = this.state.counter;
+      if( Number(this.state.miliseconds) == 99 ) {
+        count = (Number(this.state.counter) + 1).toString();
+        num = '00';
+      }
+      this.setState({
+        counter: count.length == 1 ? '0'+count : count,
+        miliseconds: num.length == 1 ? '0'+num : num
+      });
+    }, 0);
+    this.setState({timer});
+  }
+
+  stop(){clearInterval(this.state.timer);}
 }
 
 /*###########################################################################
@@ -199,7 +241,6 @@ class Card extends React.Component {
 	}
 }
 
-
 /*###########################################################################
                               StyleSheet
 ###########################################################################*/
@@ -207,7 +248,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#fff'
+    backgroundColor: '#e7e0df'
   },
   row: {
     flex: 1,
@@ -217,7 +258,7 @@ const styles = StyleSheet.create({
     flex: 10,
     justifyContent: 'space-around',
     padding: 10,
-    marginTop: 20,
+    marginTop: 30,
   },
   card: {
     flex: 1,
@@ -232,7 +273,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
     marginTop: 75,
   },
-  timer: {
+  pad: {
     flex: 1,
 		alignItems: 'center',
     marginBottom: 50,
@@ -248,5 +289,17 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 5,
     backgroundColor: "#a1cfce",
+  },
+  counter: {
+    fontSize: 60,
+    textAlign: 'center',
+    height: 60,
+    margin: 10,
+  },
+  miniCounter: {
+      fontSize:20,
+      position: 'relative',
+      top: -32,
+      right: -50
   },
 });
