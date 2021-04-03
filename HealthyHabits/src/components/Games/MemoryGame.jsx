@@ -71,7 +71,8 @@ export default class MemoryGame extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.score}>
+        <View style={styles.innerContainer}>
+          <Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={50}></Ionicons>
           <Text style={styles.counter}>{this.state.counter}
             <Text style={styles.miniCounter}>.{this.state.miliseconds}</Text>
           </Text>
@@ -268,9 +269,9 @@ const styles = StyleSheet.create({
 		fontSize: 50,
 		fontWeight: 'bold'
 	},
-  score: {
+  innerContainer: {
     flex: 1,
-		alignItems: 'center',
+    flexDirection: 'row',
     marginTop: 75,
   },
   pad: {
@@ -291,15 +292,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#a1cfce",
   },
   counter: {
+    flex: 3,
     fontSize: 60,
-    textAlign: 'center',
+    textAlign: 'left',
     height: 60,
     margin: 10,
   },
   miniCounter: {
-      fontSize:20,
-      position: 'relative',
-      top: -32,
-      right: -50
+    fontSize:20,
+    position: 'relative',
+    top: -32,
+    right: -50
   },
+  back:{ 
+    flex: 2,
+    alignSelf: 'flex-start',
+  },  
 });
