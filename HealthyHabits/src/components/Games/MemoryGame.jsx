@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import {Overlay} from 'react-native-elements';
+import {Overlay, Header, Icon} from 'react-native-elements';
 import {Ionicons} from '@expo/vector-icons';
 
 /*###########################################################################
@@ -62,7 +62,7 @@ export default class MemoryGame extends Component {
       current_selection: [],
       selected_pairs: [],
       deck: deck,
-    },() => console.log(deck.length));
+    });
     this.start();
   }
 
@@ -73,9 +73,21 @@ export default class MemoryGame extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          statusBarProps={{ barStyle: "light-content" }}
+          barStyle="light-content" // or directly
+          leftComponent={<Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={30}></Ionicons>}
+          centerComponent={{
+            text: "Memory Game",
+            style: { color: "#FFF", fontSize: 22 }
+          }}
+          containerStyle={{
+            backgroundColor: "#85C3CF",
+            justifyContent: "space-around"
+        }}/>
         <View style={styles.innerContainer}>
-          <Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={50}></Ionicons>
-          <Text style={styles.counter}>Score: {this.state.counter}
+          
+        <Text style={styles.counter}>Time: {this.state.counter}
             <Text style={styles.miniCounter}>.{this.state.miliseconds}</Text>
           </Text>
         </View>
@@ -282,7 +294,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: 75,
+    marginTop: 10,
   },
   pad: {
     flex: 1,
@@ -307,6 +319,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     height: 60,
     margin: 10,
+    marginLeft: 90,
   },
   miniCounter: {
     fontSize:20,
