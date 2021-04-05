@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Switch, Animated} from 'react-native';
-import { Header, Slider, CheckBox } from "react-native-elements";
+import { Header, Slider, CheckBox, Button } from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons'
 
 export default class Setting extends Component{
@@ -10,6 +10,7 @@ export default class Setting extends Component{
         <Header
         statusBarProps={{ barStyle: "light-content" }}
         barStyle="light-content" 
+        leftComponent={<Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={30}></Ionicons>}
         centerComponent={{text: "Setting",style: { color: "#FFF", fontSize: 22 }}}
         containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
         />
@@ -18,6 +19,19 @@ export default class Setting extends Component{
           <Game />
           <Apperance />
         </View>
+          <Button
+            buttonStyle={{
+              paddingBottom: 40,
+              paddingTop: 20,
+              backgroundColor: "#85C3CF",
+            }}
+            titleStyle={{
+              fontSize: 22,
+              color: "black",
+            }}
+            
+            title="Save Changes"
+          />
       </View>
     )
   }
