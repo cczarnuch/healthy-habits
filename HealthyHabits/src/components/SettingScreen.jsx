@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Switch, Animated} from 'react-native';
 import { Header, Slider, CheckBox } from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons'
@@ -24,6 +24,8 @@ export default class Setting extends Component{
 }
 
 const Sound = (props) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return(
     <View>
       <View style={styles.secHeader}>
@@ -64,7 +66,12 @@ const Sound = (props) => {
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,}}>
         <Text style={styles.item}>Mute</Text>
-        <View style={styles.switch}><Switch /></View>
+        <View style={styles.switch}>
+          <Switch 
+            trackColor={{ false: "#2e6a75", true: "#2e6a75" }}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          /></View>
       </View>
       </View>
     </View>
@@ -86,6 +93,8 @@ const Game = (props) => {
 }
 
 const Apperance = (props) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return(
     <View>
       <View style={styles.secHeader}>
@@ -99,7 +108,13 @@ const Apperance = (props) => {
         padding: 15,
         borderRadius: 20,}}>
         <Text style={styles.item}>Dark Theme</Text>
-        <View style={styles.switch}><Switch /></View>
+        <View style={styles.switch}>
+          <Switch 
+            trackColor={{ false: "#2e6a75", true: "#2e6a75" }}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
       </View>
       </View>
     </View>
@@ -149,7 +164,7 @@ class Diffculty extends Component{
           <CheckBox
             containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent',}}
             uncheckedColor={'white'}
-            checkedColor={'black'}
+            checkedColor={'#2e6a75'}
             center
             title={opt.title}
             textStyle={{color: 'black',fontWeight: 'normal',}}
