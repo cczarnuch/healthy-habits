@@ -21,4 +21,12 @@ export default StyleSheet.create({
         marginTop: 260,
         marginLeft: 35
     },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+      },
+      slider: {
+          justifyContent: 'center',
+      }
 })
