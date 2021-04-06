@@ -34,9 +34,9 @@ const App = () => {
 
   return (
     display === true ? <Swiper loop={false} showsPagination={false} index={1}>
-      <GameDisplay styles={styles} handleGame={handleGame} />
-      <MountainView styles={styles} />
       <CalendarPage styles={styles} />
+      <MountainView styles={styles} />
+      <GameDisplay styles={styles} handleGame={handleGame} />
     </Swiper> : display
   );
 };
