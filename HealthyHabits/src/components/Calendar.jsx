@@ -5,16 +5,16 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header } from "react-native-elements";
 import { Dayjs } from "dayjs";
 
-function join(t, a, s) {
-  function format(m) {
-    let f = new Intl.DateTimeFormat("en", m);
-    return f.format(t);
-  }
-  return a.map(format).join(s);
-}
+// function join(t, a, s) {
+//   function format(m) {
+//     let f = new Intl.DateTimeFormat("en", m);
+//     return f.format(t);
+//   }
+//   return a.map(format).join(s);
+// }
 
-var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
-var sToday = join(new Date(), a, "-");
+// var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
+// var sToday = join(new Date(), a, "-");
 
 const CalendarPage = ({ styles }) => {
   return (
