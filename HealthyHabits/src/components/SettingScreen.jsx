@@ -7,13 +7,6 @@ export default class Setting extends Component{
   render(){
     return(
       <View style={styles.container}>
-        <Header
-        statusBarProps={{ barStyle: "light-content" }}
-        barStyle="light-content" 
-        leftComponent={<Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={30}></Ionicons>}
-        centerComponent={{text: "Setting",style: { color: "#FFF", fontSize: 22 }}}
-        containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
-        />
         <View style={styles.innerContainer}>
           <Sound />
           <Game />
@@ -76,7 +69,7 @@ const Sound = (props) => {
         backgroundColor: '#85C3CF',
         padding: 15,
         borderTopColor: '#FFF',
-        borderTopWidth: '1',
+        borderTopWidth: 1,
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,}}>
         <Text style={styles.item}>Mute</Text>

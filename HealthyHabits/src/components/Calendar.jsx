@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Header } from "react-native-elements";
+import { Header, Icon, Overlay } from "react-native-elements";
 import { Dayjs } from "dayjs";
+import Setting from '../components/SettingScreen';
+import styles from '../styles/main'
 
 function join(t, a, s) {
   function format(m) {
@@ -16,19 +18,27 @@ function join(t, a, s) {
 var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
 var sToday = join(new Date(), a, "-");
 
-const CalendarPage = ({ styles }) => {
+const CalendarPage = () => {
+
+  const [visible, setVisible] = useState(false);
+
+  const displaySettingsScreen = () => {
+      console.log("toggle pressed")
+      setVisible(!visible);
+  };
+
   return (
     <SafeAreaProvider>
       <Header
         statusBarProps={{ barStyle: "light-content" }}
         barStyle="light-content" // or directly
-        rightComponent={{ icon: "settings", color: "#fff" }}
+        rightComponent={<Icon name="settings" color="white" onPress={displaySettingsScreen}></Icon> }
         centerComponent={{
           text: "Calendar",
           style: { color: "#FFF", fontSize: 22 }
         }}
         containerStyle={{
-          backgroundColor: "#85C3CF",
+          backgroundColor: '#85CBCC',
           justifyContent: "space-around"
         }}
       />
@@ -53,6 +63,20 @@ const CalendarPage = ({ styles }) => {
           vertical={true}
         />
       </View>
+
+      {/* Settings Overlay toggled when settings Icon is clicked */}
+      <Overlay isVisible={visible} fullScreen={true}>
+        <Header
+            statusBarProps={{ barStyle: "light-content" }}
+            barStyle="light-content" 
+            rightComponent={<Icon  name="close" color="white" style={styles.back} size={30} onPress={displaySettingsScreen}></Icon>}
+            centerComponent={{text: "Settings",style: { color: "#FFF", fontSize: 22 }}}
+            containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
+        />
+        <Setting></Setting>
+
+    </Overlay>
+
     </SafeAreaProvider>
   );
 };
