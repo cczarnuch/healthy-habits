@@ -7,17 +7,20 @@ import styles from '../../styles/main.js';
 import journalBackground from '../../assets/gradient.jpg';
 
 function displayMountainScreen() {
-    // TODO: navigation
     console.log("return to mountain pressed")
+
 }
 
-function submitEntry(){
+function submitEntry(journalResponse, sliderVal){
     console.log("submit entry button pressed")
+    console.log("response:", journalResponse, "sliderVal:", sliderVal)
+    // Send values to Game Controller
+    displayMountainScreen()
 }
 
-const JournalGame = () => {
-    const [text, onChangeText] = React.useState(null);
-    const [sliderVal, setSliderValue] = React.useState(null);
+const JournalGame = ({ navigation }) => {
+    const [journalResponse, onChangeText] = React.useState(null);
+    const [sliderVal, setSliderValue] = React.useState(0);
 
     return (
         <SafeAreaProvider>
@@ -39,9 +42,11 @@ const JournalGame = () => {
             <Text>Welcome to Journal Entry. This minigame is meant to help you reflect on your day, the good and bad.</Text>
             
             <TextInput 
-        style={styles.input} value={text} onChangeText={onChangeText} placeholder="Enter your thoughts about the day"></TextInput>
+                style={styles.input} value={journalResponse} onChangeText={onChangeText} placeholder="Enter your thoughts about the day">
+            </TextInput>
             
             <View>
+                <Text>Rate your overall mood on a scale of 1 to 10. </Text>
                 <Slider style={styles.slider}
                         minimumTrackTintColor="#85C3CF"
                         onSlidingComplete={(sliderVal) => setSliderValue(sliderVal)}
@@ -53,7 +58,7 @@ const JournalGame = () => {
                 <Text>{sliderVal}</Text>
             </View>
             
-            <Button title="Submit" onPress={submitEntry}/>
+            <Button title="Submit" onPress={() => submitEntry(journalResponse,sliderVal)}/>
        </View>
        </BackgroundImage>
        </SafeAreaProvider>       
