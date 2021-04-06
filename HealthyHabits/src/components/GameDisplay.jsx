@@ -4,7 +4,7 @@ import { Header } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import bgPicture from '../assets/games.jpg';
 
-const GameDisplay = () => {
+const GameDisplay = (props) => {
 
     const [gamesList, setGamesList] = useState([
         { name: "Workout\nGame", id: 1 },
@@ -15,9 +15,9 @@ const GameDisplay = () => {
         { name: "Journal\nGame", id: 6 },
     ]);
 
-    const pressHandler = (id) => {
+    /*const pressHandler = (id) => {
         console.log(id);
-    }
+    }*/
 
     return (
         <SafeAreaProvider>
@@ -36,7 +36,7 @@ const GameDisplay = () => {
                     keyExtractor={(item) => item.id}
                     data={gamesList}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={styles.gameButton} onPress={() => pressHandler(item.id)}>
+                        <TouchableOpacity style={styles.gameButton} onPress={() => props.handleGame(item.id)}>
                             <Text style={styles.buttonText}>{item.name}</Text>
                         </TouchableOpacity>
                     )}
