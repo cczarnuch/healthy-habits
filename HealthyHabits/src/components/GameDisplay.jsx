@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import bgPicture from '../assets/games.jpg';
 import Setting from '../components/SettingScreen';
 
-const GameDisplay = () => {
+const GameDisplay = (props) => {
 
     const [visible, setVisible] = useState(false);
 
@@ -18,9 +18,9 @@ const GameDisplay = () => {
         { name: "Journal\nGame", id: 6 },
     ]);
 
-    const pressHandler = (id) => {
+    /*const pressHandler = (id) => {
         console.log(id);
-    }
+    }*/
 
     const displaySettingsScreen = () => {
         console.log("toggle pressed")
@@ -49,7 +49,7 @@ const GameDisplay = () => {
                     keyExtractor={(item) => item.id}
                     data={gamesList}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={styles.gameButton} onPress={() => pressHandler(item.id)}>
+                        <TouchableOpacity style={styles.gameButton} onPress={() => props.handleGame(item.id)}>
                             <Text style={styles.buttonText}>{item.name}</Text>
                         </TouchableOpacity>
                     )}
