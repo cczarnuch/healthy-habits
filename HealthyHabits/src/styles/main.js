@@ -16,7 +16,8 @@ export default StyleSheet.create({
     img: {
         flex: 1,
         height: '100%',
-        width: '100%'
+        width: '100%',
+        resizeMode: 'stretch'
     },
     man: {
         width: 60,
@@ -36,4 +37,9 @@ export default StyleSheet.create({
         color: color1, 
         fontSize: 22
     },
+    score: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20
+    }
 })
