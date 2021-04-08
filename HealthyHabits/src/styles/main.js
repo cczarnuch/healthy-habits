@@ -19,19 +19,16 @@ export default StyleSheet.create({
         width: '100%',
         resizeMode: 'stretch'
     },
-    man: {
-        width: 60,
-        height: 60,
-        marginTop: 260,
-        marginLeft: 35
-    },
     input: {
-        height: 40,
+        height: 80,
         margin: 12,
         borderWidth: 1,
+        textAlignVertical: 'top'
     },
     slider: {
         justifyContent: 'center',
+        color: color3,
+        tintColor: color1,
     },
     header: {
         color: color1, 
@@ -41,5 +38,14 @@ export default StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontSize: 20
+    },
+    button: {
+        color: color4,
+    },
+    smile: {
+        width: '100%',
+        height: '30%',
+        resizeMode: 'contain',
+        padding: 0
     }
 })
