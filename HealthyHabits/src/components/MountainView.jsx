@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Button, StyleSheet, Text, View } from 'react-native';
 import styles from '../styles/main.js';
-import mPicture from '../assets/mnt.jpg';
-import manPicture from '../assets/hike.png';
+import m1 from '../assets/mountain1.png'; import m2 from '../assets/mountain2.png'; import m3 from '../assets/mountain3.png'; import m4 from '../assets/mountain4.png'; import m5 from '../assets/mountain5.png'; import m6 from '../assets/mountain6.png'; import m7 from '../assets/mountain7.png';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Header, Icon, Overlay } from "react-native-elements";
 import { ImageBackground } from 'react-native';
@@ -16,15 +15,21 @@ import Setting from '../components/SettingScreen';
 const MountainView = () => {
 
     const [visible, setVisible] = useState(false);
+    var score = 0;
+    var image = m1;
 
     const displaySettingsScreen = () => {
         console.log("toggle pressed")
         setVisible(!visible);
     };
 
+    const switchMountainImg = () => {
+        console.log("switch mountain image")
+    }
+
     return (
         <SafeAreaProvider>
-            <ImageBackground source={mPicture} style={styles.img}>            
+            <ImageBackground source={image} style={styles.img}>            
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
                 barStyle="light-content" // or directly
@@ -38,9 +43,9 @@ const MountainView = () => {
                 justifyContent: "space-around"
                 }}
             />
-            <Image source={manPicture} style={styles.man}></Image>
-            {/* <Icon name="circle" color="red" style={styles.checkpoint}></Icon> */}
             
+            <Text style={styles.score}>Score: {score}</Text>
+    
             </ImageBackground>
 
             {/* Settings Overlay toggled when settings Icon is clicked */}

@@ -16,24 +16,36 @@ export default StyleSheet.create({
     img: {
         flex: 1,
         height: '100%',
-        width: '100%'
-    },
-    man: {
-        width: 60,
-        height: 60,
-        marginTop: 260,
-        marginLeft: 35
+        width: '100%',
+        resizeMode: 'stretch'
     },
     input: {
-        height: 40,
+        height: 80,
         margin: 12,
         borderWidth: 1,
+        textAlignVertical: 'top'
     },
     slider: {
         justifyContent: 'center',
+        color: color3,
+        tintColor: color1,
     },
     header: {
         color: color1, 
         fontSize: 22
     },
+    score: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20
+    },
+    button: {
+        color: color4,
+    },
+    smile: {
+        width: '100%',
+        height: '30%',
+        resizeMode: 'contain',
+        padding: 0
+    }
 })
