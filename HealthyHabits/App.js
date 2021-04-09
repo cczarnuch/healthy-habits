@@ -6,43 +6,51 @@ import MountainView from "./src/components/MountainView";
 import GameDisplay from "./src/components/GameDisplay";
 import { StyleSheet, Text, View } from "react-native";
 import WorkoutGame from "./src/components/Games/WorkoutGame";
-import MathGame from './src/components/Games/MathGame';
-import MemoryGame from './src/components/Games/MemoryGame';
-import JournalGame from './src/components/Games/JournalGame';
+import MathGame from "./src/components/Games/MathGame";
+import MemoryGame from "./src/components/Games/MemoryGame";
+import JournalGame from "./src/components/Games/JournalGame";
+import WordGame from "./src/components/Games/WordGame";
 
-const App = () => {  
-  const [display, setDisplay] = useState(true)
-  const [points, setPoints] = useState(0)
+const App = () => {
+  const [display, setDisplay] = useState(true);
+  const [points, setPoints] = useState(0);
 
-  const handleGame = (gameId) => {
-    switch(gameId) {
+  const handleGame = gameId => {
+    switch (gameId) {
       case 1:
-        setDisplay(<WorkoutGame updatePoints={updatePoints} setMain={setDisplay} />)
-        break
+        setDisplay(
+          <WorkoutGame updatePoints={updatePoints} setMain={setDisplay} />
+        );
+        break;
       case 2:
-        setDisplay(<MathGame updatePoints={updatePoints} />)
-        break
+        setDisplay(<MathGame updatePoints={updatePoints} />);
+        break;
       case 4:
-        setDisplay(<MemoryGame updatePoints={updatePoints} />)
-        break
+        setDisplay(<MemoryGame updatePoints={updatePoints} />);
+        break;
       case 6:
-        setDisplay(<JournalGame updatePoints={updatePoints} />)
-        break
+        setDisplay(<JournalGame updatePoints={updatePoints} />);
+        break;
+      case 3:
+        setDisplay(<WordGame updatePoints={updatePoints} />);
+        break;
       default:
-        setDisplay(true)
+        setDisplay(true);
     }
-  }
+  };
 
-  const updatePoints = (number) => {
-    setPoints(points + number)
-  }
+  const updatePoints = number => {
+    setPoints(points + number);
+  };
 
-  return (
-    display === true ? <Swiper loop={false} showsPagination={false} index={1}>
+  return display === true ? (
+    <Swiper loop={false} showsPagination={false} index={1}>
       <CalendarPage styles={styles} />
       <MountainView styles={styles} points={points} />
       <GameDisplay styles={styles} handleGame={handleGame} />
-    </Swiper> : display
+    </Swiper>
+  ) : (
+    display
   );
 };
 
