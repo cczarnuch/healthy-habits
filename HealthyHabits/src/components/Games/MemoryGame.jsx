@@ -17,7 +17,7 @@ export default class MemoryGame extends Component {
       current_selection: [],
       selected_pairs: [],
       cardsPerDiff: [8,10,12],
-      diffculty: 1,
+      diffculty: 2,
       score: 0,
       found: 0,
       runningTime: 0,
@@ -76,7 +76,7 @@ export default class MemoryGame extends Component {
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content" // or directly
-          leftComponent={<Ionicons  name="arrow-back-outline" color="#000" style={styles.back} size={30}></Ionicons>}
+          leftComponent={<Icon  name="chevron-left" color="white" style={styles.back} size={30}></Icon>}
           centerComponent={{
             text: "Memory Game",
             style: { color: "#FFF", fontSize: 22 }
@@ -331,10 +331,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: -32,
     right: -50
-  },
-  back:{ 
-    flex: 1,
-    alignSelf: 'flex-start',
   },
   endScreen: {
     height: 30,
