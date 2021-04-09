@@ -14,9 +14,11 @@ export default class Setting extends Component{
         </View>
           <Button
             buttonStyle={{
-              paddingBottom: 40,
               paddingTop: 20,
+              paddingBottom: 20,
               backgroundColor: "#85C3CF",
+              borderBottomLeftRadius: 40, 
+              borderBottomRightRadius: 40,
             }}
             titleStyle={{
               fontSize: 22,
@@ -169,7 +171,7 @@ class Diffculty extends Component{
         borderRadius: 20,}}>
         {this.state.options.map((opt, i) =>(
           <CheckBox
-            containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent',}}
+            containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent', marginLeft: 0}}
             uncheckedColor={'white'}
             checkedColor={'#2e6a75'}
             center

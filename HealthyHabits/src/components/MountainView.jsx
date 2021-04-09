@@ -55,7 +55,8 @@ const MountainView = () => {
                     barStyle="light-content" 
                     rightComponent={<Icon  name="close" color="white" style={styles.back} size={30} onPress={displaySettingsScreen}></Icon>}
                     centerComponent={{text: "Settings",style: { color: "#FFF", fontSize: 22 }}}
-                    containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
+                    containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around", 
+                    borderTopLeftRadius: 40, borderTopRightRadius: 40}}
                 />
                 <Setting></Setting>
 
