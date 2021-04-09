@@ -17,7 +17,7 @@ export default class MemoryGame extends Component {
       current_selection: [],
       selected_pairs: [],
       cardsPerDiff: [8,10,12],
-      diffculty: 0,
+      diffculty: 1,
       score: 0,
       found: 0,
       runningTime: 0,
@@ -34,7 +34,7 @@ export default class MemoryGame extends Component {
   //Initialize the deck of cards based on diffculty
   componentDidMount(){
     let pool = [
-      {name: 'baseball', color: '#bebfa4'},
+      {name: 'baseball', color: '#fff'},
       {name: 'heart', color: 'red'},
       {name: 'calendar', color: '#497dde'},
       {name: 'pulse', color: 'black'},
@@ -82,7 +82,7 @@ export default class MemoryGame extends Component {
             style: { color: "#FFF", fontSize: 22 }
           }}
           containerStyle={{
-            backgroundColor: "#85C3CF",
+            backgroundColor: color1,
             justifyContent: "space-around"
         }}/>
         <View style={styles.innerContainer}>
@@ -251,7 +251,7 @@ class Card extends React.Component {
 		}
 		return (
 			<View style={styles.card}>
-				<TouchableHighlight onPress={this.props.clickCard} activeOpacity={0.75} underlayColor={"#f1f1f1"}>
+				<TouchableHighlight onPress={this.props.clickCard} activeOpacity={0.75} underlayColor={"#f1f1f1"} style={styles.cardBorder}>
 					<Ionicons 
 						name={icon_name} 
 						size={80} 
@@ -267,11 +267,17 @@ class Card extends React.Component {
 /*###########################################################################
                               StyleSheet
 ###########################################################################*/
+const color1 = '#85CBCC'
+const color2 = '#A8DEE0'
+const color3 = '#F9E2AE'
+const color4 = '#FBC78D'
+const color5 = '#A7D676'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#e7e0df'
+    backgroundColor: "#fff",
   },
   row: {
     flex: 1,
@@ -287,6 +293,11 @@ const styles = StyleSheet.create({
     flex: 1,
 		alignItems: 'center',
 	},
+  cardBorder:{
+    borderColor: color4,
+    borderWidth: 5,
+    borderRadius: 5,
+  },
 	card_text: {
 		fontSize: 50,
 		fontWeight: 'bold'
@@ -302,16 +313,10 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   faceUp:{
-    borderColor: "#6f4f0f",
-    borderWidth: 3,
-    borderRadius: 5,
-    backgroundColor: "#63afae",
+    backgroundColor: color1,
   },
   faceDown:{
-    borderColor: "#6f4f0f",
-    borderWidth: 3,
-    borderRadius: 5,
-    backgroundColor: "#a1cfce",
+    backgroundColor: color2,
   },
   counter: {
     flex: 5,
