@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header } from "react-native-elements";
 
@@ -32,15 +32,6 @@ const wordFourAnswer = "HEALTH";
 const greenColor = "#A7D676";
 const lightBlueColor = "#A8DEE0";
 const darkBlueColor = "#85CBCC";
-
-const createWinAlert = () =>
-  Alert.alert("You Won!", "You seem wordy of the crown :)", [
-    {
-      text: "Play Again",
-      onPress: () => console.log("Cancel Pressed")
-    },
-    { text: "Game Menu", onPress: () => console.log("OK Pressed") }
-  ]);
 
 class WordGame extends React.Component {
   constructor(props) {
@@ -141,6 +132,16 @@ class WordGame extends React.Component {
         return i;
       }
     }
+  }
+
+  createWinAlert() {
+    Alert.alert("You Won!", "You are wordy of the crown :)", [
+      {
+        text: "Play Again",
+        onPress: () => console.log("Cancel Pressed")
+      },
+      { text: "Game Menu", onPress: () => console.log("OK Pressed") }
+    ]);
   }
 
   lightUpDragBlock() {
@@ -293,7 +294,9 @@ class WordGame extends React.Component {
                     this.state.wordOneTry.substring(1, 20) ==
                   wordOneAnswer
                 ) {
-           
+                  if (this.state.score + 1 == 10) {
+                    this.createWinAlert();
+                  }
                   this.setState({
                     score: this.state.score + 1
                   });

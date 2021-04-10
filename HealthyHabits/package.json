@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/native": "^5.9.4",
     "expo": "~40.0.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
@@ -16,6 +17,7 @@
     "react-native-calendars": "^1.1254.0",
     "react-native-countdown-component": "^2.7.1",
     "react-native-elements": "^3.3.2",
+    "react-native-restart": "^0.0.22",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-swiper": "^1.6.0-rc.3",
     "react-native-web": "~0.13.12"
