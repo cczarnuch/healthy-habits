@@ -12,17 +12,19 @@ function displayMountainScreen() {
 
 }
 
-function submitEntry(journalResponse, sliderVal){
-    console.log("submit entry button pressed")
-    console.log("response:", journalResponse, "sliderVal:", sliderVal)
-    // Send values to Game Controller
-    displayMountainScreen()
-}
-
-const JournalGame = ({ navigation }) => {
+const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData }) => {
     const [journalResponse, onChangeText] = React.useState(null);
     const [sliderVal, setSliderValue] = React.useState(0);
-
+   
+    function submitEntry(journalResponse, sliderVal){
+        console.log("submit entry button pressed")
+       // console.log("response:", journalResponse, "sliderVal:", sliderVal)
+        // Send values to Game Controller
+        updatePlayerData('journal', journalResponse)
+        updatePoints(5, journalActive)
+        displayMountainScreen()
+    }
+  
     return (
         <SafeAreaProvider>
         <BackgroundImage source={journalBackground} style={styles.img}>
