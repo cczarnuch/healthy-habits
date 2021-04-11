@@ -47,23 +47,23 @@ class MathGame extends React.Component {
         if (random_question_type<= 2) {
             console.log('Multiplication');
             sign = 'X';
-            question_1 = Math.floor(Math.random() * 10);
-            question_2 = Math.floor(Math.random() * 10);
+            question_1 = Math.floor(Math.random() * 10)+1;
+            question_2 = Math.floor(Math.random() * 10)+1;
             answer = question_1 * question_2;
-            random_answer_1 = Math.floor(Math.random() * 100);
-            random_answer_2 = Math.floor(Math.random() * 100);
-            random_answer_3 = Math.floor(Math.random() * 100);
+            random_answer_1 = Math.floor(Math.random() * 100)+1;
+            random_answer_2 = Math.floor(Math.random() * 100)+1;
+            random_answer_3 = Math.floor(Math.random() * 100)+1;
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
         //Addition
         else if (random_question_type> 2 && random_question_type<= 5) {
             console.log('Addition');
             sign = '+';
-            question_1 = Math.floor(Math.random() * 50);
-            question_2 = Math.floor(Math.random() * 50);
+            question_1 = Math.floor(Math.random() * 50)+10;
+            question_2 = Math.floor(Math.random() * 50)+10;
             answer = question_1 + question_2;
-            random_answer_1 = answer + (Math.floor(Math.random() * 15) + 6);
-            random_answer_2 = answer - (Math.floor(Math.random() * 6) + 1);
+            random_answer_1 = answer + (Math.floor(Math.random() * 15) + 8);
+            random_answer_2 = Math.floor(Math.random() * 10) + 1;
             random_answer_3 = answer + (Math.floor(Math.random() * 6) + 1);
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
@@ -72,11 +72,11 @@ class MathGame extends React.Component {
             console.log('Subtraction');
             sign = '-';
             question_1 = (Math.floor(Math.random() * 100) + 50);
-            question_2 = Math.floor(Math.random() * 50);
+            question_2 = Math.floor(Math.random() * 50)+1;
             answer = question_1 - question_2;
-            random_answer_1 = Math.floor(Math.random() * 50);
-            random_answer_2 = Math.floor(Math.random() * 50);
-            random_answer_3 = Math.floor(Math.random() * 50);
+            random_answer_1 = Math.floor(Math.random() * 50)+1;
+            random_answer_2 = Math.floor(Math.random() * 50)+1;
+            random_answer_3 = Math.floor(Math.random() * 50)+1;
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
         //Division
@@ -88,7 +88,7 @@ class MathGame extends React.Component {
             question_1 = temp_1 * temp_2;
             question_2 = temp_1;
             answer = temp_2;
-            random_answer_1 = Math.floor(Math.random() * 9) + 0;
+            random_answer_1 = Math.floor(Math.random() * 9) + 1;
             random_answer_2 = Math.floor(Math.random() * 20) + 14;
             random_answer_3 = Math.floor(Math.random() * 15) + 9;
             if (random_answer_1 == answer) { random_answer_1 += 1;}
