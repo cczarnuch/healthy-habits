@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header, Icon, Overlay } from "react-native-elements";
@@ -7,16 +7,16 @@ import { Dayjs } from "dayjs";
 import Setting from '../components/SettingScreen';
 import styles from '../styles/main'
 
-function join(t, a, s) {
-  function format(m) {
-    let f = new Intl.DateTimeFormat("en", m);
-    return f.format(t);
-  }
-  return a.map(format).join(s);
-}
+// function join(t, a, s) {
+//   function format(m) {
+//     let f = new Intl.DateTimeFormat("en", m);
+//     return f.format(t);
+//   }
+//   return a.map(format).join(s);
+// }
 
-var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
-var sToday = join(new Date(), a, "-");
+// var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
+// var sToday = join(new Date(), a, "-");
 
 const CalendarPage = () => {
 
@@ -58,6 +58,21 @@ const CalendarPage = () => {
           showScrollIndicator={true}
           onDayPress={day => {
             console.log("selected day", day);
+            Alert.alert(
+              'Your activity on ' + day.dateString + ':\n\n',
+              "Workout Game: \n\n" +
+              "Math Game: \n\n" +
+              "Word Game: \n\n" +
+              "Memorization Game: \n\n" +
+              "Meditation Game: \n\n" +
+              "Journal: ",
+              [
+                  {
+                      text: "OK",
+                      onPress: () => console.log("Closed activity info screen")
+                  }
+              ]
+          )
           }}
           maxDate={new Date()}
           vertical={true}
