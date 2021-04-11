@@ -23,7 +23,7 @@ const App = () => {
         );
         break;
       case 2:
-        setDisplay(<MathGame updatePoints={updatePoints} />);
+        setDisplay(<MathGame updatePoints={updatePoints} setMain={setDisplay}/>);
         break;
       case 4:
         setDisplay(<MemoryGame updatePoints={updatePoints} />);

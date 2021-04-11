@@ -1,39 +1,33 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header } from "react-native-elements";
 
 const ShownLetters = [
-  "E",
-  "",
-  "",
-  "S",
-  "O",
-  "",
-  "",
-  "F",
   "",
   "I",
   "",
   "",
   "",
-  "U",
+  "L",
+  "M",
   "",
-  "G",
-  "E",
-  ""
+  "A",
+  "",
+  "",
+  "Y",
+  "H",
+  "",
+  "A",
+  "",
+  "",
+  "H"
 ];
 
-const wordOneAnswer = "EAT";
-const wordTwoAnswer = "SODA";
-const wordThreeAnswer = "FRIES";
-const wordFourAnswer = "BURGER";
+const wordOneAnswer = "FIT";
+const wordTwoAnswer = "CALM";
+const wordThreeAnswer = "HAPPY";
+const wordFourAnswer = "HEALTH";
 
 const greenColor = "#A7D676";
 const lightBlueColor = "#A8DEE0";
@@ -43,6 +37,11 @@ class WordGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      wordOneTry: " I ",
+      wordTwoTry: "  LM",
+      wordThreeTry: " A  Y",
+      wordFourTry: "H A  H",
+
       W1L1changeBackgroundColor: lightBlueColor,
       W1L1changeBorderColor: darkBlueColor,
       W1L2changeBackgroundColor: lightBlueColor,
@@ -87,16 +86,21 @@ class WordGame extends React.Component {
       W4L6changeBorderColor: darkBlueColor,
       W4FullColor: darkBlueColor,
 
-      score: 0,
+      D1changeBorderColor: greenColor,
+      D2changeBorderColor: greenColor,
+      D3changeBorderColor: greenColor,
+      D4changeBorderColor: greenColor,
+      D5changeBorderColor: greenColor,
+      D6changeBorderColor: greenColor,
+      D7changeBorderColor: greenColor,
+      D8changeBorderColor: greenColor,
+      D9changeBorderColor: greenColor,
+      D10changeBorderColor: greenColor,
 
+      score: 0,
       tempIndex: -1,
 
-      wordOneTry: "E  ",
-      wordTwoTry: "SO  ",
-      wordThreeTry: "F I  ",
-      wordFourTry: " U GE ",
-
-      choiceAnswer: ["R", "B", "A", "D", "E", "R", "T", "A", "R", "S"],
+      choiceAnswer: ["H", "F", "C", "P", "A", "L", "T", "P", "E", "T"],
 
       W1L1: ShownLetters[0],
       W1L2: ShownLetters[1],
@@ -118,9 +122,7 @@ class WordGame extends React.Component {
       W4L3: ShownLetters[14],
       W4L4: ShownLetters[15],
       W4L5: ShownLetters[16],
-      W4L6: ShownLetters[17],
-
-      D1L1: "R"
+      W4L6: ShownLetters[17]
     };
   }
 
@@ -132,46 +134,52 @@ class WordGame extends React.Component {
     }
   }
 
+  createWinAlert() {
+    Alert.alert("You Won!", "You are wordy of the crown :)", [
+      {
+        text: "Play Again",
+        onPress: () => console.log("Cancel Pressed")
+      },
+      { text: "Game Menu", onPress: () => console.log("OK Pressed") }
+    ]);
+  }
+
+  lightUpDragBlock() {
+    this.setState({ D1changeBorderColor: greenColor });
+    this.setState({ D2changeBorderColor: greenColor });
+    this.setState({ D3changeBorderColor: greenColor });
+    this.setState({ D4changeBorderColor: greenColor });
+    this.setState({ D5changeBorderColor: greenColor });
+    this.setState({ D6changeBorderColor: greenColor });
+    this.setState({ D7changeBorderColor: greenColor });
+    this.setState({ D8changeBorderColor: greenColor });
+    this.setState({ D9changeBorderColor: greenColor });
+    this.setState({ D10changeBorderColor: greenColor });
+  }
+
   lightUpBorderDragPress() {
     this.setState({ W1L1changeBorderColor: greenColor });
-
     this.setState({ W1L2changeBorderColor: greenColor });
-
     this.setState({ W1L3changeBorderColor: greenColor });
-
     this.setState({ W2L1changeBorderColor: greenColor });
-
     this.setState({ W2L2changeBorderColor: greenColor });
-
     this.setState({ W2L3changeBorderColor: greenColor });
-
     this.setState({ W2L4changeBorderColor: greenColor });
-
     this.setState({ W3L1changeBorderColor: greenColor });
-
     this.setState({ W3L2changeBorderColor: greenColor });
-
     this.setState({ W3L3changeBorderColor: greenColor });
-
     this.setState({ W3L4changeBorderColor: greenColor });
-
     this.setState({ W3L5changeBorderColor: greenColor });
-
     this.setState({ W4L1changeBorderColor: greenColor });
-
     this.setState({ W4L2changeBorderColor: greenColor });
-
     this.setState({ W4L3changeBorderColor: greenColor });
-
     this.setState({ W4L4changeBorderColor: greenColor });
-
     this.setState({ W4L5changeBorderColor: greenColor });
-
     this.setState({ W4L6changeBorderColor: greenColor });
   }
 
   lightUpBorderNotChosen(inputValue) {
-    if (inputValue != "W1L1" && this.state.WLL1 == "") {
+    if (inputValue != "W1L1" && this.state.W1L1 == "") {
       this.setState({ W1L1changeBorderColor: darkBlueColor });
     }
     if (inputValue != "W1L2" && this.state.W1L2 == "") {
@@ -235,7 +243,7 @@ class WordGame extends React.Component {
           barStyle="light-content" // or directly
           rightComponent={{ icon: "settings", color: "#fff" }}
           centerComponent={{
-            text: "Word Fill",
+            text: "Word Game",
             style: { color: "#FFF", fontSize: 26 }
           }}
           containerStyle={{
@@ -248,12 +256,7 @@ class WordGame extends React.Component {
             <Text
               style={{
                 fontSize: 70,
-                color:
-                  this.state.score == 10
-                    ? greenColor
-                    : this.state.score == 0
-                    ? "#FA897B"
-                    : "#FFDD94"
+                color: this.state.score == 10 ? greenColor : "#FFDD94"
               }}
             >
               {this.state.score.toString() + "/10"}
@@ -277,6 +280,7 @@ class WordGame extends React.Component {
                   W1L1: this.state.choiceAnswer[this.state.tempIndex]
                 });
 
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L1");
 
                 this.setState({
@@ -290,6 +294,9 @@ class WordGame extends React.Component {
                     this.state.wordOneTry.substring(1, 20) ==
                   wordOneAnswer
                 ) {
+                  if (this.state.score + 1 == 10) {
+                    this.createWinAlert();
+                  }
                   this.setState({
                     score: this.state.score + 1
                   });
@@ -299,6 +306,7 @@ class WordGame extends React.Component {
 
                 this.state.tempIndex = -1;
               } else if (this.state.wordOneTry != wordOneAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W1L1; //execute the manipulations
@@ -340,7 +348,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W1L2: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L2");
 
                 this.setState({
@@ -365,6 +373,7 @@ class WordGame extends React.Component {
 
                 this.state.tempIndex = -1;
               } else if (this.state.wordOneTry != wordOneAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W1L2; //execute the manipulations
@@ -405,7 +414,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W1L3changeBackgroundColor: greenColor
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L3");
 
                 this.setState({
@@ -434,6 +443,7 @@ class WordGame extends React.Component {
 
                 this.state.tempIndex = -1;
               } else if (this.state.wordOneTry != wordOneAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W1L3; //execute the manipulations
@@ -479,7 +489,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W2L1: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L1");
 
                 this.setState({
@@ -500,6 +510,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordTwoTry != wordTwoAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W2L1; //execute the manipulations
@@ -553,7 +564,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W2L2: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L2");
 
                 this.setState({
@@ -576,6 +587,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordTwoTry != wordTwoAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W2L2; //execute the manipulations
@@ -622,7 +634,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W2L3: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L3");
 
                 this.setState({
@@ -645,6 +657,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordTwoTry != wordTwoAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W2L3; //execute the manipulations
@@ -691,7 +704,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W2L4: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L4");
 
                 this.setState({
@@ -712,6 +725,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordTwoTry != wordTwoAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W2L4; //execute the manipulations
@@ -756,7 +770,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W3L1: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L1");
 
                 this.setState({
@@ -777,6 +791,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordThreeTry != wordThreeAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W3L1; //execute the manipulations
@@ -821,7 +836,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W3L2: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L2");
 
                 this.setState({
@@ -844,6 +859,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordThreeTry != wordThreeAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W3L2; //execute the manipulations
@@ -891,7 +907,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W3L3: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L3");
 
                 this.setState({
@@ -914,6 +930,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordThreeTry != wordThreeAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W3L3; //execute the manipulations
@@ -961,7 +978,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W3L4: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L4");
 
                 this.setState({
@@ -986,6 +1003,7 @@ class WordGame extends React.Component {
 
                 this.state.tempIndex = -1;
               } else if (this.state.wordThreeTry != wordThreeAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W3L4; //execute the manipulations
@@ -1033,7 +1051,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W3L5: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L5");
 
                 this.setState({
@@ -1054,6 +1072,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordThreeTry != wordThreeAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L5");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W3L5; //execute the manipulations
@@ -1099,7 +1118,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W4L1: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L1");
 
                 this.setState({
@@ -1120,6 +1139,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L1; //execute the manipulations
@@ -1163,7 +1183,7 @@ class WordGame extends React.Component {
                 this.setState({
                   W4L2: this.state.choiceAnswer[this.state.tempIndex]
                 });
-
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L2");
 
                 this.setState({
@@ -1186,6 +1206,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L2; //execute the manipulations
@@ -1255,6 +1276,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L3; //execute the manipulations
@@ -1324,6 +1346,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L4; //execute the manipulations
@@ -1393,6 +1416,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L5");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L5; //execute the manipulations
@@ -1460,6 +1484,7 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
               } else if (this.state.wordFourTry != wordFourAnswer) {
+                this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L6");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
                 newIds[this.findSpace()] = this.state.W4L6; //execute the manipulations
@@ -1488,19 +1513,15 @@ class WordGame extends React.Component {
             <Text style={styleShape.appButtonText}>{this.state.W4L6}</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styleShape.container}>
+        <View style={styleShape.blankSpace}></View>
+        <View style={this.dragContainer()}>
           {this.state.choiceAnswer[0] != "" ? (
             <TouchableOpacity
-              style={
-                this.state.choiceAnswer[0] == ""
-                  ? this.DragOne()
-                  : this.DragOne(
-                      this.state.changeBorderColor,
-                      this.state.changeBorderColor
-                    )
-              }
+              style={this.DragOne()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.lightUpDragBlock();
+                this.setState({ D1changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 0 });
                 this.lightUpBorderDragPress();
               }}
@@ -1513,8 +1534,10 @@ class WordGame extends React.Component {
 
           {this.state.choiceAnswer[1] != "" ? (
             <TouchableOpacity
-              style={this.DragOne()}
+              style={this.DragTwo()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D2changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 1 });
                 this.lightUpBorderDragPress();
               }}
@@ -1527,8 +1550,10 @@ class WordGame extends React.Component {
 
           {this.state.choiceAnswer[2] != "" ? (
             <TouchableOpacity
-              style={this.DragOne()}
+              style={this.DragThree()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D3changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 2 });
                 this.lightUpBorderDragPress();
               }}
@@ -1541,8 +1566,10 @@ class WordGame extends React.Component {
 
           {this.state.choiceAnswer[3] != "" ? (
             <TouchableOpacity
-              style={this.DragOne()}
+              style={this.DragFour()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D4changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 3 });
                 this.lightUpBorderDragPress();
               }}
@@ -1554,8 +1581,10 @@ class WordGame extends React.Component {
           ) : null}
           {this.state.choiceAnswer[4] != "" ? (
             <TouchableOpacity
-              style={this.DragOne()}
+              style={this.DragFive()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D5changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 4 });
                 this.lightUpBorderDragPress();
               }}
@@ -1567,11 +1596,13 @@ class WordGame extends React.Component {
           ) : null}
         </View>
 
-        <View style={styleShape.container}>
+        <View style={this.dragContainer()}>
           {this.state.choiceAnswer[5] != "" ? (
             <TouchableOpacity
-              style={this.DragTwo()}
+              style={this.DragSix()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D6changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 5 });
                 this.lightUpBorderDragPress();
               }}
@@ -1583,8 +1614,10 @@ class WordGame extends React.Component {
           ) : null}
           {this.state.choiceAnswer[6] != "" ? (
             <TouchableOpacity
-              style={this.DragTwo()}
+              style={this.DragSeven()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D7changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 6 });
                 this.lightUpBorderDragPress();
               }}
@@ -1596,8 +1629,10 @@ class WordGame extends React.Component {
           ) : null}
           {this.state.choiceAnswer[7] != "" ? (
             <TouchableOpacity
-              style={this.DragTwo()}
+              style={this.DragEight()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D8changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 7 });
                 this.lightUpBorderDragPress();
               }}
@@ -1609,8 +1644,10 @@ class WordGame extends React.Component {
           ) : null}
           {this.state.choiceAnswer[8] != "" ? (
             <TouchableOpacity
-              style={this.DragTwo()}
+              style={this.DragNine()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D9changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 8 });
                 this.lightUpBorderDragPress();
               }}
@@ -1622,8 +1659,10 @@ class WordGame extends React.Component {
           ) : null}
           {this.state.choiceAnswer[9] != "" ? (
             <TouchableOpacity
-              style={this.DragTwo()}
+              style={this.DragTen()}
               onPress={() => {
+                this.lightUpDragBlock();
+                this.setState({ D10changeBorderColor: "#FFFFFF" });
                 this.setState({ tempIndex: 9 });
                 this.lightUpBorderDragPress();
               }}
@@ -1634,9 +1673,32 @@ class WordGame extends React.Component {
             </TouchableOpacity>
           ) : null}
         </View>
+        <View style={this.dragContainer()}></View>
       </SafeAreaProvider>
     );
   }
+
+  WordOneFull = function() {
+    return {
+      marginTop: 30,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor:
+        this.state.wordOneTry == wordOneAnswer
+          ? greenColor
+          : this.state.W1FullColor,
+      borderWidth: 5,
+      borderColor:
+        this.state.wordOneTry == wordOneAnswer
+          ? greenColor
+          : this.state.W1FullColor
+    };
+  };
 
   W1L1Style = function() {
     return {
@@ -1686,28 +1748,6 @@ class WordGame extends React.Component {
     };
   };
 
-  WordOneFull = function() {
-    return {
-      marginTop: 30,
-      marginRight: 5,
-      marginLeft: 5,
-      justifyContent: "center",
-      width: 55,
-      height: 55,
-      borderRadius: 10,
-      transform: [{ scaleX: 1 }, { scaleY: 1 }],
-      backgroundColor:
-        this.state.wordOneTry == wordOneAnswer
-          ? greenColor
-          : this.state.W1FullColor,
-      borderWidth: 5,
-      borderColor:
-        this.state.wordOneTry == wordOneAnswer
-          ? greenColor
-          : this.state.W1FullColor
-    };
-  };
-
   WordTwoFull = function() {
     return {
       marginTop: 50,
@@ -1727,50 +1767,6 @@ class WordGame extends React.Component {
         this.state.wordTwoTry == wordTwoAnswer
           ? greenColor
           : this.state.W2FullColor
-    };
-  };
-
-  WordThreeFull = function() {
-    return {
-      marginTop: 50,
-      marginRight: 5,
-      marginLeft: 5,
-      justifyContent: "center",
-      width: 55,
-      height: 55,
-      borderRadius: 10,
-      transform: [{ scaleX: 1 }, { scaleY: 1 }],
-      backgroundColor:
-        this.state.wordThreeTry == wordThreeAnswer
-          ? greenColor
-          : this.state.W3FullColor,
-      borderWidth: 5,
-      borderColor:
-        this.state.wordThreeTry == wordThreeAnswer
-          ? greenColor
-          : this.state.W3FullColor
-    };
-  };
-
-  WordFourFull = function() {
-    return {
-      marginTop: 50,
-      marginRight: 5,
-      marginLeft: 5,
-      justifyContent: "center",
-      width: 55,
-      height: 55,
-      borderRadius: 10,
-      transform: [{ scaleX: 1 }, { scaleY: 1 }],
-      backgroundColor:
-        this.state.wordFourTry == wordFourAnswer
-          ? greenColor
-          : this.state.W4FullColor,
-      borderWidth: 5,
-      borderColor:
-        this.state.wordFourTry == wordFourAnswer
-          ? greenColor
-          : this.state.W4FullColor
     };
   };
 
@@ -1835,6 +1831,28 @@ class WordGame extends React.Component {
       backgroundColor: this.state.W2L4changeBackgroundColor,
       borderWidth: 5,
       borderColor: this.state.W2L4changeBorderColor
+    };
+  };
+
+  WordThreeFull = function() {
+    return {
+      marginTop: 50,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor:
+        this.state.wordThreeTry == wordThreeAnswer
+          ? greenColor
+          : this.state.W3FullColor,
+      borderWidth: 5,
+      borderColor:
+        this.state.wordThreeTry == wordThreeAnswer
+          ? greenColor
+          : this.state.W3FullColor
     };
   };
 
@@ -1915,6 +1933,28 @@ class WordGame extends React.Component {
       backgroundColor: this.state.W3L5changeBackgroundColor,
       borderWidth: 5,
       borderColor: this.state.W3L5changeBorderColor
+    };
+  };
+
+  WordFourFull = function() {
+    return {
+      marginTop: 50,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor:
+        this.state.wordFourTry == wordFourAnswer
+          ? greenColor
+          : this.state.W4FullColor,
+      borderWidth: 5,
+      borderColor:
+        this.state.wordFourTry == wordFourAnswer
+          ? greenColor
+          : this.state.W4FullColor
     };
   };
 
@@ -2014,9 +2054,19 @@ class WordGame extends React.Component {
     };
   };
 
+  dragContainer = function() {
+    return {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 100,
+      backgroundColor: this.state.score == 10 ? greenColor : "#FFDD94"
+    };
+  };
+
   DragOne = function() {
     return {
-      marginTop: 40,
+      marginTop: 20,
       marginRight: 5,
       marginLeft: 5,
       justifyContent: "center",
@@ -2025,13 +2075,14 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor: greenColor,
-      borderColor: greenColor
+      borderWidth: 5,
+      borderColor: this.state.D1changeBorderColor
     };
   };
 
   DragTwo = function() {
     return {
-      marginTop: 40,
+      marginTop: 20,
       marginRight: 5,
       marginLeft: 5,
       justifyContent: "center",
@@ -2040,13 +2091,143 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor: greenColor,
-      borderColor: greenColor
+      borderWidth: 5,
+      borderColor: this.state.D2changeBorderColor
+    };
+  };
+
+  DragThree = function() {
+    return {
+      marginTop: 20,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D3changeBorderColor
+    };
+  };
+
+  DragFour = function() {
+    return {
+      marginTop: 20,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D4changeBorderColor
+    };
+  };
+
+  DragFive = function() {
+    return {
+      marginTop: 20,
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D5changeBorderColor
+    };
+  };
+
+  DragSix = function() {
+    return {
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D6changeBorderColor
+    };
+  };
+
+  DragSeven = function() {
+    return {
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D7changeBorderColor
+    };
+  };
+
+  DragEight = function() {
+    return {
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D8changeBorderColor
+    };
+  };
+
+  DragNine = function() {
+    return {
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D9changeBorderColor
+    };
+  };
+
+  DragTen = function() {
+    return {
+      marginRight: 5,
+      marginLeft: 5,
+      justifyContent: "center",
+      width: 55,
+      height: 55,
+      borderRadius: 10,
+      transform: [{ scaleX: 1 }, { scaleY: 1 }],
+      backgroundColor: greenColor,
+      borderWidth: 5,
+      borderColor: this.state.D10changeBorderColor
     };
   };
 }
 
 const styleShape = StyleSheet.create({
   container: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  blankSpace: {
+    marginTop: 30,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"

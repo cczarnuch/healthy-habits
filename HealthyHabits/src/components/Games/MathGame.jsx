@@ -1,17 +1,22 @@
 import React from "react";
-import { Button } from 'react-native-elements';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { Header } from 'react-native-elements';
+import { Button, StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import CountDown from 'react-native-countdown-component';
 
 class MathGame extends React.Component {
-    state = {
-        points: 0,
-        question_1: 0,
-        question_2: 0,
-        question_sign: 'X',
-        actual_answer: 0,
-        answers: [0, 0, 0, 0]
-    };
+    constructor(props) {
+        super(props);
+        this.props = props;
+        this.state = {
+            points: 0,
+            question_1: 0,
+            question_2: 0,
+            question_sign: 'X',
+            actual_answer: 0,
+            answers: [0, 0, 0, 0],
+            finished: 0
+        };
+    }
 
     mix(array) {
         var currentIndex = array.length,
@@ -47,23 +52,23 @@ class MathGame extends React.Component {
         if (random_question_type<= 2) {
             console.log('Multiplication');
             sign = 'X';
-            question_1 = Math.floor(Math.random() * 10);
-            question_2 = Math.floor(Math.random() * 10);
+            question_1 = Math.floor(Math.random() * 10)+1;
+            question_2 = Math.floor(Math.random() * 10)+1;
             answer = question_1 * question_2;
-            random_answer_1 = Math.floor(Math.random() * 100);
-            random_answer_2 = Math.floor(Math.random() * 100);
-            random_answer_3 = Math.floor(Math.random() * 100);
+            random_answer_1 = Math.floor(Math.random() * 100)+1;
+            random_answer_2 = Math.floor(Math.random() * 100)+1;
+            random_answer_3 = Math.floor(Math.random() * 100)+1;
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
         //Addition
         else if (random_question_type> 2 && random_question_type<= 5) {
             console.log('Addition');
             sign = '+';
-            question_1 = Math.floor(Math.random() * 50);
-            question_2 = Math.floor(Math.random() * 50);
+            question_1 = Math.floor(Math.random() * 50)+10;
+            question_2 = Math.floor(Math.random() * 50)+10;
             answer = question_1 + question_2;
-            random_answer_1 = answer + (Math.floor(Math.random() * 15) + 6);
-            random_answer_2 = answer - (Math.floor(Math.random() * 6) + 1);
+            random_answer_1 = answer + (Math.floor(Math.random() * 15) + 8);
+            random_answer_2 = Math.floor(Math.random() * 10) + 1;
             random_answer_3 = answer + (Math.floor(Math.random() * 6) + 1);
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
@@ -72,23 +77,23 @@ class MathGame extends React.Component {
             console.log('Subtraction');
             sign = '-';
             question_1 = (Math.floor(Math.random() * 100) + 50);
-            question_2 = Math.floor(Math.random() * 50);
+            question_2 = Math.floor(Math.random() * 50)+1;
             answer = question_1 - question_2;
-            random_answer_1 = Math.floor(Math.random() * 50);
-            random_answer_2 = Math.floor(Math.random() * 50);
-            random_answer_3 = Math.floor(Math.random() * 50);
+            random_answer_1 = Math.floor(Math.random() * 50)+1;
+            random_answer_2 = Math.floor(Math.random() * 50)+1;
+            random_answer_3 = Math.floor(Math.random() * 50)+1;
             answers = [answer, random_answer_1, random_answer_2, random_answer_3];
         }
         //Division
         else {
             console.log('Division');
-            sign = '/';
-            temp_1 = Math.floor(Math.random() * 20) + 1;
-            temp_2 = Math.floor(Math.random() * 6) + 1;
+            sign = '÷';
+            let temp_1 = Math.floor(Math.random() * 20) + 1;
+            let temp_2 = Math.floor(Math.random() * 6) + 1;
             question_1 = temp_1 * temp_2;
             question_2 = temp_1;
             answer = temp_2;
-            random_answer_1 = Math.floor(Math.random() * 9) + 0;
+            random_answer_1 = Math.floor(Math.random() * 9) + 1;
             random_answer_2 = Math.floor(Math.random() * 20) + 14;
             random_answer_3 = Math.floor(Math.random() * 15) + 9;
             if (random_answer_1 == answer) { random_answer_1 += 1;}
@@ -120,33 +125,54 @@ class MathGame extends React.Component {
         this.setState({
             points: this.state.points + 1
         });
-        } else if (this.state.points != 0){
-        this.setState({
-            points: this.state.points - 1
-        });
-        }
+        } 
         this.generate_question();
     }
 
     time_done() {
-        alert('Time done! You finished with ' + this.state.points + ' point(s)!');
+        Alert.alert(
+            'Time Done',
+            "You answered " + this.state.points + " question(s) correctly!",
+            [
+                {
+                    text: "OK",
+                    onPress: () => this.finish_game()
+                }
+            ]
+        )
+    }
+
+    finish_game() {
+        let temp = this.state.points * 100;
+        if (temp >= 1000) { this.props.updatePoints(1000); }
+        else { this.props.updatePoints(temp); }
+
+        this.props.setMain(true);
     }
 
 render() {
     return (
         <View className="container" style={body}>
-            <View className="title" style={title}>
-                <Text></Text>
-                <Text style={title}>Math Game</Text>
-                <Text></Text>
-            </View>
+            <Text></Text>
+            <Header
+                statusBarProps={{ barStyle: "light-content" }}
+                barStyle="light-content" // or directly
+                centerComponent={{
+                text: "Math Game",
+                style: { color: "#FFF", fontSize: 26 }
+                }}
+                containerStyle={{
+                backgroundColor: "#A8DEE0",
+                justifyContent: "space-around"
+                }}
+            />
             <View className="points" style={points}>
                 <Text></Text>
                 <Text style={points}>Points: {this.state.points}</Text>
             </View>
             <View className="countdown" style={countdown}>
                 <CountDown
-                    until={60 * 1}
+                    until={30 * 1}
                     size={50}
                     onFinish={() => this.time_done()}
                     digitStyle={{backgroundColor: '#FFF'}}
@@ -162,23 +188,27 @@ render() {
             </View>
             <View className="answers" style={answers}>
                 <Button 
+                    color="#85CBCC"
                     onPress={() => this.check_answer(this.state.answers[0])}
-                    title={this.state.answers[0]}>
+                    title={String(this.state.answers[0])}>
                 </Button>
                 <Text></Text>
                 <Button 
+                    color="#85CBCC"
                     onPress={() => this.check_answer(this.state.answers[1])}
-                    title={this.state.answers[1]}>
+                    title={String(this.state.answers[1])}>
                 </Button>
                 <Text></Text>
                 <Button 
+                    color="#85CBCC"
                     onPress={() => this.check_answer(this.state.answers[2])}
-                    title={this.state.answers[2]}>
+                    title={String(this.state.answers[2])}>
                 </Button>
                 <Text></Text>
                 <Button 
+                    color="#85CBCC"
                     onPress={() => this.check_answer(this.state.answers[3])}
-                    title={this.state.answers[3]}>
+                    title={String(this.state.answers[3])}>
                 </Button>
             </View>
         </View>
@@ -190,7 +220,7 @@ const body = {
     flex: 1,
     fontSize: 50,
     textAlign: "center",
-    backgroundColor: "#fcecb1"
+    backgroundColor: "#F9E2AE"
 };
 const title = {
     position: "relative",
@@ -225,8 +255,7 @@ const answers = {
     left: 0, 
     right: 0,
     fontSize: 20,
-    textAlign: "center",
-    backgroundColor: "black"
+    textAlign: "center"
 };
 
 export default MathGame;
