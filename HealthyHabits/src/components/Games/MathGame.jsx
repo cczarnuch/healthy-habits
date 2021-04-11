@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from 'react-native-elements';
 import { Button, StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import CountDown from 'react-native-countdown-component';
+import {Ionicons} from '@expo/vector-icons';
 
 class MathGame extends React.Component {
     constructor(props) {
@@ -143,11 +144,14 @@ class MathGame extends React.Component {
     }
 
     finish_game() {
-        let temp = this.state.points * 100;
-        if (temp >= 1000) { this.props.updatePoints(1000); }
-        else { this.props.updatePoints(temp); }
-
-        this.props.setMain(true);
+        let temp = this.state.points * 1;
+        //if (temp >= 10) { this.props.updatePoints(10); }
+        //else { this.props.updatePoints(temp); }
+        //this.props.setMain(true);
+        this.props.updatePoints(10, this.props.mathActive)
+        this.props.updatePlayerData('math', 10)
+        console.log('Returning to MountainView')
+        this.props.setMain(true)
     }
 
 render() {
@@ -156,23 +160,29 @@ render() {
             <Text></Text>
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
-                barStyle="light-content" // or directly
+                barStyle="light-content"
+                leftComponent={<Ionicons
+                    name="arrow-back-outline" 
+                    color="#000" 
+                    style={back} 
+                    size={30}
+                    onPress={() => this.props.setMain(true)}></Ionicons>}
                 centerComponent={{
-                text: "Math Game",
-                style: { color: "#FFF", fontSize: 26 }
+                    text: "Math Game",
+                    style: { color: "#FFF", fontSize: 26 }
                 }}
                 containerStyle={{
-                backgroundColor: "#A8DEE0",
-                justifyContent: "space-around"
+                    backgroundColor: "#A8DEE0",
+                    justifyContent: "space-around"
                 }}
             />
             <View className="points" style={points}>
                 <Text></Text>
-                <Text style={points}>Points: {this.state.points}</Text>
+                <Text style={points}>Correct: {this.state.points}</Text>
             </View>
             <View className="countdown" style={countdown}>
                 <CountDown
-                    until={30 * 1}
+                    until={3 * 1}
                     size={50}
                     onFinish={() => this.time_done()}
                     digitStyle={{backgroundColor: '#FFF'}}
@@ -257,5 +267,10 @@ const answers = {
     fontSize: 20,
     textAlign: "center"
 };
+
+const back = {
+    flex: 1,
+    alignSelf: 'flex-start'
+}
 
 export default MathGame;

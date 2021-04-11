@@ -9,7 +9,7 @@ import planks from '../../assets/workouts/p.png'
 import pushUps from '../../assets/workouts/pu.png'
 import sitUps from '../../assets/workouts/su.png'
 
-const WorkoutGame = ({ setMain, updatePoints, workoutActive }) => {
+const WorkoutGame = ({ setMain, updatePoints, workoutActive, updatePlayerData }) => {
   const [video, setVideo] = useState(null)
   const [repNumber, setRepNumber] = useState(1)
   const MAX_repNumber = 2
@@ -45,7 +45,8 @@ const WorkoutGame = ({ setMain, updatePoints, workoutActive }) => {
       handleStart()
       setRepNumber(repNumber + 1)
     } else {
-      updatePoints(3000, workoutActive)
+      updatePoints(10, workoutActive)
+      updatePlayerData('workout', 10)
       setMain(true)
     }
   }
