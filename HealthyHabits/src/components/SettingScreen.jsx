@@ -1,24 +1,60 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Switch, Animated} from 'react-native';
 import { Header, Slider, CheckBox, Button } from "react-native-elements";
 import {Ionicons} from '@expo/vector-icons'
+import main from '../styles/main.js';
 
 {/*##########################################
                     Main
   ##########################################*/}
 export default class Setting extends Component{
+  constructor(props){
+    super(props)
+    this.updateChanges = this.updateChanges.bind(this)
+    this.saveChanges = this.saveChanges.bind(this)
+    this.state = {
+      diff: 1,
+      dark: false
+    }
+  }
+
+  updateChanges(setting, data){
+    if (setting === "theme"){
+      this.setState({
+        dark: data
+      }, () => console.log("from setting ",this.state.dark))
+    } else if (setting === "diff"){
+      this.setState({
+        diff: data
+      }, () => console.log("from setting ",this.state.diff))
+    }
+  }
+
+  saveChanges(){
+    this.props.updateSetting("diff", this.state.diff)
+    this.props.updateSetting("theme", this.state.dark)
+  }
+
   render(){
     return(
-      <View style={styles.container}>
+      <View style={[this.props.dark ? main.darkContainer: styles.container]}>
         <View style={styles.innerContainer}>
-          <Sound />
-          <Game />
-          <Apperance />
+          <Sound 
+            dark={this.props.dark}/>
+          <Game 
+            updateChanges={this.updateChanges}
+            diffculty={this.props.diffculty}
+            dark={this.props.dark}/>
+          <Apperance 
+            updateChanges={this.updateChanges}
+            dark={this.props.dark}/>
         </View>
         <Button
           buttonStyle={styles.saveButton}
           titleStyle={styles.saveTitle}
-          title="Save Changes"/>
+          title="Save Changes"
+          onPress={this.saveChanges}
+          />
       </View>
     )
   }
@@ -30,11 +66,12 @@ export default class Setting extends Component{
 const Sound = (props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  let iconColor = props.dark ? "white" : "black"
   return(
     <View>
       <View style={styles.secHeader}>
-        <Ionicons name="volume-medium-outline" size={30} style={styles.icon}></Ionicons>
-        <Text style={styles.title}>Sound</Text>
+        <Ionicons name="volume-medium-outline" size={30} color={iconColor} style={styles.icon}></Ionicons>
+        <Text style={[props.dark ? styles.titleDark : styles.title]}>Sound</Text>
       </View>
       <View style={styles.itemContainer}>
       <View style={styles.soundTopComp}>
@@ -69,14 +106,17 @@ const Sound = (props) => {
                     Game Setting
   ##########################################*/}
 const Game = (props) => {
+  let iconColor = props.dark ? "white" : "black"
   return(
     <View>
       <View style={styles.secHeader}>
-        <Ionicons name="game-controller-outline" size={30} style={styles.icon}></Ionicons>
-        <Text style={styles.title}>Game Diffculty</Text>
+        <Ionicons name="game-controller-outline" size={30} color={iconColor} style={styles.icon}></Ionicons>
+        <Text style={[props.dark ? styles.titleDark : styles.title]}>Game Diffculty</Text>
       </View>
       <View style={styles.itemContainer}>
-        <Diffculty />
+        <Diffculty 
+          updateChanges={props.updateChanges}
+          diffculty={props.diffculty}/>
       </View>
     </View>
   );
@@ -88,11 +128,24 @@ class Diffculty extends Component{
     this.state = {
       options: [
         {title: 'Easy',checked: false},
-        {title: 'Normal',checked: true},
+        {title: 'Normal',checked: false},
         {title: 'Hard',checked: false}
       ]
     };
   }
+
+  componentDidMount(){
+    const options = this.state.options.map((opt, i) => {
+      if (i !== this.props.diffculty)return {...opt,checked: false,}
+      if (i === this.props.diffculty) {
+        const item = {...opt,checked: !opt.checked,}
+        return item
+      }
+     return opt
+   })
+   this.setState({options: options,})
+  }
+
   checkboxHandler(index){
     const options = this.state.options.map((opt, i) => {
       if (i !== index)return {...opt,checked: false,}
@@ -101,8 +154,9 @@ class Diffculty extends Component{
         return item
       }
      return opt
-   })
-   this.setState({options: options,})
+    })
+    this.setState({options: options,})
+    this.props.updateChanges("diff", index)
   }
   render() {
     return (
@@ -126,14 +180,70 @@ class Diffculty extends Component{
 {/*##########################################
                     Apperance Setting
   ##########################################*/}
-const Apperance = (props) => {
+class Apperance extends Component{
+  constructor(props){
+    super(props)
+    this.toggleSwitch = this.toggleSwitch.bind(this)
+    this.state = {
+      isEnabled: false
+    }
+  }
+  componentDidMount(){
+    this.setState({
+      isEnabled: this.props.dark
+    });
+  }
+
+  toggleSwitch(){
+    this.setState({
+      isEnabled: !this.state.isEnabled,
+    }, () => this.props.updateChanges("theme", this.state.isEnabled));
+  }
+
+  render(){
+    let iconColor = this.props.dark ? "white" : "black"
+    return(
+      <View>
+      <View style={styles.secHeader}>
+        <Ionicons name="contrast-sharp" size={30} color={iconColor} style={styles.icon}></Ionicons>
+        <Text style={[this.props.dark ? styles.titleDark : styles.title]}>Display</Text>
+      </View>
+      <View style={styles.itemContainer}>
+      <View style={styles.displayComp}>
+        <Text style={styles.item}>Dark Theme</Text>
+        <View style={styles.switch}>
+          <Switch 
+            trackColor={{ false: "#2e6a75", true: "#2e6a75" }}
+            onValueChange={this.toggleSwitch}
+            value={this.state.isEnabled}
+          />
+        </View>
+      </View>
+      </View>
+    </View>
+    )
+  }
+}
+const Apper = (props) => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  let iconColor = props.dark ? "white" : "black"
+  useEffect(() => {
+    setIsEnabled(props.dark)
+  },[props.dark])
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled)
+    setIsEnabled(async (state)  => {
+      await console.log("from apperance ", state); 
+      return state;
+    }, console.log("hi"));
+    console.log("from apperance2 ", isEnabled); 
+    props.updateChanges("theme", isEnabled)
+  }
   return(
     <View>
       <View style={styles.secHeader}>
-        <Ionicons name="contrast-sharp" size={30} style={styles.icon}></Ionicons>
-        <Text style={styles.title}>Display</Text>
+        <Ionicons name="contrast-sharp" size={30} color={iconColor} style={styles.icon}></Ionicons>
+        <Text style={[props.dark ? styles.titleDark : styles.title]}>Display</Text>
       </View>
       <View style={styles.itemContainer}>
       <View style={styles.displayComp}>
@@ -148,6 +258,8 @@ const Apperance = (props) => {
       </View>
       </View>
     </View>
+
+
   );
 }
 
@@ -173,6 +285,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
+  },
+  titleDark: {
+    fontSize: 30,
+    color: "white",
   },
   icon: {
     paddingRight: 10,
@@ -211,6 +327,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: color1,
     padding: 15,
+    borderTopColor: '#FFF',
+    borderTopWidth: 1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
   },

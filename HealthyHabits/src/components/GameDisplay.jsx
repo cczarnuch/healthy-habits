@@ -96,7 +96,10 @@ const GameDisplay = props => {
             justifyContent: "space-around"
           }}
         />
-        <Setting></Setting>
+        <Setting 
+          updateSetting={props.updateSetting}
+          dark={props.dark} diffculty={props.diffculty}>
+        </Setting>
       </Overlay>
     </SafeAreaProvider>
   );

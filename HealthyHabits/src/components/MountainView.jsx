@@ -12,7 +12,7 @@ import Setting from '../components/SettingScreen';
 //     console.log("settings button pressed")
 // }
 
-const MountainView = () => {
+const MountainView = (props) => {
 
     const [visible, setVisible] = useState(false);
     var score = 0;
@@ -53,12 +53,15 @@ const MountainView = () => {
                 <Header
                     statusBarProps={{ barStyle: "light-content" }}
                     barStyle="light-content" 
-                    rightComponent={<Icon  name="close" color="white" style={styles.back} size={30} onPress={displaySettingsScreen}></Icon>}
+                    rightComponent={<Icon  name="close" color="white" size={30} onPress={displaySettingsScreen}></Icon>}
                     centerComponent={{text: "Settings",style: { color: "#FFF", fontSize: 22 }}}
                     containerStyle={{backgroundColor: "#85CBCC",justifyContent: "space-around", 
                     borderTopLeftRadius: 40, borderTopRightRadius: 40}}
                 />
-                <Setting></Setting>
+                <Setting 
+                    updateSetting={props.updateSetting}
+                    dark={props.dark} diffculty={props.diffculty}>
+                </Setting>
 
             </Overlay>
 

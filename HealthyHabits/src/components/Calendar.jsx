@@ -18,7 +18,7 @@ import styles from '../styles/main'
 // var a = [{ year: "numeric" }, { month: "2-digit" }, { day: "2-digit" }];
 // var sToday = join(new Date(), a, "-");
 
-const CalendarPage = () => {
+const CalendarPage = (props) => {
 
   const [visible, setVisible] = useState(false);
 
@@ -88,7 +88,10 @@ const CalendarPage = () => {
             centerComponent={{text: "Settings",style: { color: "#FFF", fontSize: 22 }}}
             containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
         />
-        <Setting></Setting>
+        <Setting 
+          updateSetting={props.updateSetting}
+          dark={props.dark} diffculty={props.diffculty}>
+        </Setting>
 
     </Overlay>
 

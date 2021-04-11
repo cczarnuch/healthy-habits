@@ -48,7 +48,7 @@ export default class MemoryGame extends Component {
       {name: 'tennisball', color: '#b9d444'}
     ];
 
-    let cards = pool.slice(0,this.state.cardsPerDiff[this.state.diffculty])
+    let cards = pool.slice(0,this.state.cardsPerDiff[this.props.diffculty])
     let clone = JSON.parse(JSON.stringify(cards));
     let deck = cards.concat(clone);
     deck.map((obj) => {
@@ -72,7 +72,7 @@ export default class MemoryGame extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[this.props.dark ? styles.containerDark : styles.container]}>
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content" // or directly
@@ -87,7 +87,7 @@ export default class MemoryGame extends Component {
         }}/>
         <View style={styles.innerContainer}>
           
-        <Text style={styles.counter}>Time: {this.state.counter}
+        <Text style={[this.props.dark ? styles.counterDark : styles.counter]}>Time: {this.state.counter}
             <Text style={styles.miniCounter}>.{this.state.miliseconds}</Text>
           </Text>
         </View>
@@ -95,7 +95,7 @@ export default class MemoryGame extends Component {
           {this.renderRows.call(this)}
         </View>
         <Overlay isVisible={this.state.visible} overlayStyle={{height: 50}}>
-          <Text>Score: {this.state.counter}{this.state.miliseconds}</Text>
+          <Text >Score: {this.state.counter}{this.state.miliseconds}</Text>
         </Overlay>
         {/* <View style={styles.pad}></View> */}
       </View>
@@ -279,6 +279,11 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: "#fff",
   },
+  containerDark: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: "#000",
+  },
   row: {
     flex: 1,
     flexDirection: 'row'
@@ -327,6 +332,21 @@ const styles = StyleSheet.create({
     marginLeft: 90,
   },
   miniCounter: {
+    fontSize:20,
+    position: 'relative',
+    top: -32,
+    right: -50
+  },
+  counterDark: {
+    flex: 5,
+    fontSize: 60,
+    textAlign: 'left',
+    height: 60,
+    margin: 10,
+    marginLeft: 90,
+    color: "white",
+  },
+  miniCounterDark: {
     fontSize:20,
     position: 'relative',
     top: -32,

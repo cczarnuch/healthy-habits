@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swiper from "react-native-swiper/src";
 import CalendarPage from "./src/components/Calendar";
 import MountainView from "./src/components/MountainView";
@@ -14,6 +14,8 @@ import WordGame from "./src/components/Games/WordGame";
 const App = () => {
   const [display, setDisplay] = useState(true);
   const [points, setPoints] = useState(0);
+  const [dark, setDark] = useState(false);
+  const [diffculty, setDiffculty] = useState(1);
 
   const handleGame = gameId => {
     switch (gameId) {
@@ -26,7 +28,11 @@ const App = () => {
         setDisplay(<MathGame updatePoints={updatePoints} setMain={setDisplay}/>);
         break;
       case 4:
-        setDisplay(<MemoryGame updatePoints={updatePoints} />);
+        setDisplay(
+          <MemoryGame 
+            updatePoints={updatePoints} 
+            diffculty={diffculty}
+            dark={dark}/>);
         break;
       case 6:
         setDisplay(<JournalGame updatePoints={updatePoints} />);
@@ -43,11 +49,29 @@ const App = () => {
     setPoints(points + number);
   };
 
+  const updateSetting = (setting, data) => {
+    if (setting === "theme"){
+      setDark(() => {
+        console.log("from App ",data);
+        return data;
+      });
+    } else if (setting === "diff"){
+      setDiffculty(() => {
+        console.log("from App ",data);
+        return data;
+      });
+    }
+    //console.log(diffculty)
+  }
+
   return display === true ? (
     <Swiper loop={false} showsPagination={false} index={1}>
-      <CalendarPage styles={styles} />
-      <MountainView styles={styles} points={points} />
-      <GameDisplay styles={styles} handleGame={handleGame} />
+      <CalendarPage styles={styles} 
+      updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
+      <MountainView styles={styles} points={points} 
+      updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
+      <GameDisplay styles={styles} handleGame={handleGame}
+      updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
     </Swiper>
   ) : (
     display
@@ -60,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
-  }
+  },
 });
 
 export default App;

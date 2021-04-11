@@ -47,5 +47,9 @@ export default StyleSheet.create({
         height: '30%',
         resizeMode: 'contain',
         padding: 0
-    }
+    },
+    darkContainer:{
+        flex: 1,
+        backgroundColor: "#000",
+    },
 })
