@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Swiper from "react-native-swiper/src";
 import CalendarPage from "./src/components/Calendar";
 import MountainView from "./src/components/MountainView";
@@ -14,6 +14,7 @@ import WordGame from "./src/components/Games/WordGame";
 const App = () => {
     const [display, setDisplay] = useState(true);
     const [points, setPoints] = useState(0);
+    const [index, setIndex] = useState(1)
     const [dark, setDark] = useState(false);
     const [diffculty, setDiffculty] = useState(1);
     //const [playerData, setPlayerData] = useState({}); // Stored as {date: {game: result, game: result}...}
@@ -62,6 +63,10 @@ const App = () => {
                 setDisplay(
                   <MemoryGame 
                     updatePoints={updatePoints} 
+                    memoryActive={memoryActive}
+                    updatePlayerData={updatePlayerData}
+                    setIndex={setIndex}
+                    setMain={setDisplay}
                     diffculty={diffculty}
                     dark={dark}/>);
                 break;
@@ -116,7 +121,7 @@ const App = () => {
     }
 
     return display === true ? (
-      <Swiper loop={false} showsPagination={false} index={1}>
+      <Swiper loop={false} showsPagination={false} index={index}>
         <CalendarPage styles={styles} playerData={playerData}
         updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
         <MountainView styles={styles} points={points} 
@@ -135,7 +140,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center"
-    }
+    },
+    darkContainer:{
+      flex: 1,
+      backgroundColor: "#000",
+      alignItems: "center",
+      justifyContent: "center"
+    },
 });
 
 export default App;

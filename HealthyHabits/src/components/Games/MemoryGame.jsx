@@ -12,6 +12,7 @@ export default class MemoryGame extends Component {
 
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
+    this.return = this.return.bind(this);
 
     this.state = {
       current_selection: [],
@@ -76,7 +77,12 @@ export default class MemoryGame extends Component {
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content" // or directly
-          leftComponent={<Icon  name="chevron-left" color="white" style={styles.back} size={30}></Icon>}
+          leftComponent={
+            <Icon  name="chevron-left" 
+            color="white"  
+            size={30}
+            onPress={this.return}>
+            </Icon>}
           centerComponent={{
             text: "Memory Game",
             style: { color: "#FFF", fontSize: 22 }
@@ -214,6 +220,20 @@ export default class MemoryGame extends Component {
   }
 
   stop(){clearInterval(this.state.timer);}
+
+  //return to game menu
+  return(){
+    this.stop();
+    this.setState({
+      stop: true,
+      start: false,
+      timer: null,
+      counter: '00',
+      miliseconds: '00',
+    });
+    this.props.setIndex(2);
+    this.props.setMain(true);
+  }
 }
 
 /*###########################################################################
