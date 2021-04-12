@@ -57,15 +57,28 @@ const CalendarPage = (props) => {
           // Enable or disable vertical scroll indicator. Default = false
           showScrollIndicator={true}
           onDayPress={day => {
-            console.log("selected day", day);
+            let workout_log = "";   let math_log = "";   let word_log = "";
+            let memorization_log = "";   let meditation_log = "";   let journal_log = "";
+            console.log(props.playerData);
+            //console.log(props.playerData[day.dateString].math);
+            if (day.dateString in props.playerData) { 
+              if ("workout" in props.playerData[day.dateString]) { workout_log = props.playerData[day.dateString].workout + " points"; }
+              if ("math" in props.playerData[day.dateString]) { math_log = props.playerData[day.dateString].math + " points"; }
+              if ("word" in props.playerData[day.dateString]) { word_log = props.playerData[day.dateString].word + " points"; }
+              if ("memorization" in props.playerData[day.dateString]) { memorization_log = props.playerData[day.dateString].memorization + " points"; }
+              if ("meditation" in props.playerData[day.dateString]) { meditation_log = props.playerData[day.dateString].meditation + " points"; }
+              if ("journal" in props.playerData[day.dateString]) { journal_log = props.playerData[day.dateString].journal; }            
+            }
+            else { console.log("Date selected does not exist in playerData"); }
+
             Alert.alert(
               'Your activity on ' + day.dateString + ':\n\n',
-              "Workout Game: \n\n" +
-              "Math Game: \n\n" +
-              "Word Game: \n\n" +
-              "Memorization Game: \n\n" +
-              "Meditation Game: \n\n" +
-              "Journal: ",
+              "Workout Game:  " + workout_log + "\n\n" +
+              "Math Game:  " + math_log + "\n\n" +
+              "Word Game:  " + word_log + "\n\n" +
+              "Memorization Game:  " + memorization_log + "\n\n" +
+              "Meditation Game:  " + meditation_log + "\n\n" +
+              "Journal:  " + journal_log,
               [
                   {
                       text: "OK",

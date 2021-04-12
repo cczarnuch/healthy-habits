@@ -18,8 +18,21 @@ const App = () => {
     const [diffculty, setDiffculty] = useState(1);
     //const [playerData, setPlayerData] = useState({}); // Stored as {date: {game: result, game: result}...}
     const [playerData, setPlayerData] = useState({ 
+      "2021-04-09": {
+        "workout": "10",
+        //"math": "10",
+        "word": "10",
+        "memorization": "10",
+        //"meditation": "10",
+        "journal": "Today sucked"
+      },
       "2021-04-10": {
-        "jnal": "Yvygnbugbth",
+        "workout": "10",
+        "math": "10",
+        "word": "10",
+        //"memorization": "10",
+        //"meditation": "10",
+        "journal": "I had a great day!"
       }
     });
 
@@ -104,7 +117,7 @@ const App = () => {
 
     return display === true ? (
       <Swiper loop={false} showsPagination={false} index={1}>
-        <CalendarPage styles={styles} 
+        <CalendarPage styles={styles} playerData={playerData}
         updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
         <MountainView styles={styles} points={points} 
         updateSetting={updateSetting} dark={dark} diffculty={diffculty}/>
