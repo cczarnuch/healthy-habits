@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Alert, TouchableNativeFeedbackBase } from 'react-native';
 import {Overlay, Header, Icon} from 'react-native-elements';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -12,7 +12,10 @@ export default class MemoryGame extends Component {
 
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
-    this.return = this.return.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.gameEnd = this.gameEnd.bind(this);
+    this.playAgain = this.playAgain.bind(this);
+    this.viewProgress = this.viewProgress.bind(this);
 
     this.state = {
       current_selection: [],
@@ -81,7 +84,7 @@ export default class MemoryGame extends Component {
             <Icon  name="chevron-left" 
             color="white"  
             size={30}
-            onPress={this.return}>
+            onPress={this.handleBack}>
             </Icon>}
           centerComponent={{
             text: "Memory Game",
@@ -103,7 +106,6 @@ export default class MemoryGame extends Component {
         <Overlay isVisible={this.state.visible} overlayStyle={{height: 50}}>
           <Text >Score: {this.state.counter}{this.state.miliseconds}</Text>
         </Overlay>
-        {/* <View style={styles.pad}></View> */}
       </View>
     );
   }
@@ -156,9 +158,8 @@ export default class MemoryGame extends Component {
       if(current_selection.length == 2){
         if(current_selection[0].name == current_selection[1].name){
           found += 1;
-          if (found === this.state.cardsPerDiff[this.state.diffculty]){
-            this.stop();
-            visible = true;
+          if (found === this.state.cardsPerDiff[this.props.diffculty]){ 
+            this.gameEnd();
           }
           selected_pairs.push(deck[index].name);
         }else{
@@ -200,6 +201,69 @@ export default class MemoryGame extends Component {
     return board;
   }
 
+  gameEnd(){
+    this.stop();
+    var points = 10 - Math.floor(Number(this.state.counter)/300)
+    this.props.updatePoints(points, this.props.memoryActive)
+    this.props.updatePlayerData('memory', points)
+    Alert.alert(
+      'Well Done!',
+      "Your score is " + this.state.counter + this.state.miliseconds + 
+      ". +" + points + " points!",
+      [
+        {
+          text: "Try Again",
+          onPress: () => this.playAgain(),
+        },
+        {
+          text: "View Progress",
+          onPress: () => this.viewProgress(),
+        }
+      ]
+    )
+  }
+
+  playAgain(){
+    let pool = [
+      {name: 'baseball', color: '#fff'},
+      {name: 'heart', color: 'red'},
+      {name: 'calendar', color: '#497dde'},
+      {name: 'pulse', color: 'black'},
+      {name: 'barbell', color: 'black'},
+      {name: 'american-football', color: 'brown'},
+      {name: 'basketball', color: '#FA8320'},
+      {name: 'bicycle', color: '#2e29c4'},
+      {name: 'football', color: 'black'},
+      {name: 'nutrition', color: 'red'},
+      {name: 'walk', color: 'black'},
+      {name: 'tennisball', color: '#b9d444'}
+    ];
+
+    let cards = pool.slice(0,this.state.cardsPerDiff[this.props.diffculty])
+    let clone = JSON.parse(JSON.stringify(cards));
+    let deck = cards.concat(clone);
+    deck.map((obj) => {
+      let id = Math.random().toString(36).substring(7);
+      obj.id = id;
+      obj.reveal = false;
+    });
+
+    deck = deck.shuffle(); 
+    this.setState({
+      current_selection: [],
+      selected_pairs: [],
+      deck: deck,
+      found: 0,
+      runningTime: 0,
+      stop: true,
+      start: false,
+      timer: null,
+      counter: '00',
+      miliseconds: '00',
+    });
+    this.start();
+  }
+
 /*###########################################################################
                               Stopwatch
 ###########################################################################*/
@@ -222,7 +286,7 @@ export default class MemoryGame extends Component {
   stop(){clearInterval(this.state.timer);}
 
   //return to game menu
-  return(){
+  handleBack(){
     this.stop();
     this.setState({
       stop: true,
@@ -231,7 +295,14 @@ export default class MemoryGame extends Component {
       counter: '00',
       miliseconds: '00',
     });
+
     this.props.setIndex(2);
+    this.props.setMain(true);
+  }
+
+  viewProgress(){
+
+    this.props.setIndex(1);
     this.props.setMain(true);
   }
 }
