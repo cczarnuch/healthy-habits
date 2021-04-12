@@ -8,7 +8,7 @@ const color5 = '#A7D676'
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: 'blue',
+        backgroundColor: color1,
     },
     title: {
         color: color1,

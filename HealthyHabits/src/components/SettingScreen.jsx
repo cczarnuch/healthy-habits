@@ -48,13 +48,14 @@ export default class Setting extends Component{
           <Apperance 
             updateChanges={this.updateChanges}
             dark={this.props.dark}/>
-        </View>
-        <Button
+          
+          <Button
           buttonStyle={styles.saveButton}
           titleStyle={styles.saveTitle}
           title="Save Changes"
           onPress={this.saveChanges}
           />
+        </View>
       </View>
     )
   }
@@ -74,7 +75,7 @@ const Sound = (props) => {
         <Text style={[props.dark ? styles.titleDark : styles.title]}>Sound</Text>
       </View>
       <View style={styles.itemContainer}>
-      <View style={styles.soundTopComp}>
+      <View style={[props.dark ? styles.soundTopCompDark : styles.soundTopComp]}>
         <Ionicons name="volume-off-outline" size={30} ></Ionicons>
         <View style={styles.volume}>
           <Slider 
@@ -88,7 +89,7 @@ const Sound = (props) => {
         </View>
         <Ionicons name="volume-high-outline" size={30} ></Ionicons>
       </View>
-      <View style={styles.soundBotComp}>
+      <View style={[props.dark ? styles.soundBotCompDark : styles.soundBotComp]}>
         <Text style={styles.item}>Mute</Text>
         <View style={styles.switch}>
           <Switch 
@@ -273,7 +274,7 @@ const color5 = '#A7D676'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: color1,
   },
   innerContainer: {
     flex: 1,
@@ -313,11 +314,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   saveButton:{
+    width: '80%',
+    alignSelf: 'center',
+    marginTop: 180,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: color1,
-    borderBottomLeftRadius: 40, 
-    borderBottomRightRadius: 40,
+    backgroundColor: color2,
+    borderRadius: 40, 
   },
   saveTitle:{
     fontSize: 22,
@@ -325,31 +328,49 @@ const styles = StyleSheet.create({
   },
   soundTopComp:{
     flexDirection: "row",
-    backgroundColor: color1,
+    backgroundColor: color2,
     padding: 15,
-    borderTopColor: '#FFF',
-    borderTopWidth: 1,
+    borderBottomColor: color1,
+    borderBottomWidth: 1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
   },
   soundBotComp: {
     flexDirection: "row",
-    backgroundColor: color1,
+    backgroundColor: color2,
     padding: 15,
-    borderTopColor: '#FFF',
+    borderTopColor: color1,
+    borderTopWidth: 1,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  soundTopCompDark:{
+    flexDirection: "row",
+    backgroundColor: color2,
+    padding: 15,
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  soundBotCompDark: {
+    flexDirection: "row",
+    backgroundColor: color2,
+    padding: 15,
+    borderTopColor: '#000',
     borderTopWidth: 1,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
   },
   gameComp:{
     flexDirection: "row",
-    backgroundColor: color1,
+    backgroundColor: color2,
     padding: 10,
     borderRadius: 20,
   },
   displayComp:{
     flexDirection: "row",
-    backgroundColor: color1,
+    backgroundColor: color2,
     padding: 15,
     borderRadius: 20,
   }

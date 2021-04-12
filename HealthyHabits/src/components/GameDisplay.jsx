@@ -11,6 +11,7 @@ import { Header, Icon, Overlay } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import bgPicture from "../assets/games.jpg";
 import Setting from "../components/SettingScreen";
+import MainStyle from "../styles/main"
 
 const GameDisplay = props => {
   const [visible, setVisible] = useState(false);
@@ -74,7 +75,7 @@ const GameDisplay = props => {
       </ImageBackground>
 
       {/* Settings Overlay toggled when settings Icon is clicked */}
-      <Overlay isVisible={visible} fullScreen={true}>
+      <Overlay isVisible={visible} fullScreen={true} overlayStyle={[props.dark ? MainStyle.darkContainer : MainStyle.container]}>
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content"
@@ -92,7 +93,7 @@ const GameDisplay = props => {
             style: { color: "#FFF", fontSize: 22 }
           }}
           containerStyle={{
-            backgroundColor: "#85C3CF",
+            backgroundColor: '#85CBCC',
             justifyContent: "space-around"
           }}
         />

@@ -93,13 +93,13 @@ const CalendarPage = (props) => {
       </View>
 
       {/* Settings Overlay toggled when settings Icon is clicked */}
-      <Overlay isVisible={visible} fullScreen={true}>
+      <Overlay isVisible={visible} fullScreen={true} overlayStyle={[props.dark ? styles.darkContainer : styles.container]}>
         <Header
             statusBarProps={{ barStyle: "light-content" }}
             barStyle="light-content" 
             rightComponent={<Icon  name="close" color="white" style={styles.back} size={30} onPress={displaySettingsScreen}></Icon>}
             centerComponent={{text: "Settings",style: { color: "#FFF", fontSize: 22 }}}
-            containerStyle={{backgroundColor: "#85C3CF",justifyContent: "space-around"}}
+            containerStyle={{backgroundColor: "#85CBCC",justifyContent: "space-around"}}
         />
         <Setting 
           updateSetting={props.updateSetting}
