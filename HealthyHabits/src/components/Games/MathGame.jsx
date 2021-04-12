@@ -9,13 +9,15 @@ class MathGame extends React.Component {
         super(props);
         this.props = props;
         this.state = {
-            points: 0,
+            correct: 0,
+            incorrect: 0,
+            counter: 10,
+            counter_id: '0',
             question_1: 0,
             question_2: 0,
             question_sign: 'X',
             actual_answer: 0,
             answers: [0, 0, 0, 0],
-            finished: 0
         };
     }
 
@@ -123,35 +125,54 @@ class MathGame extends React.Component {
         
         console.log("check_answer called")
         if (this.state.actual_answer == answer) {
-        this.setState({
-            points: this.state.points + 1
-        });
+            this.setState({
+                correct: this.state.correct + 1
+            });
+        }
+        else { 
+            this.setState({
+                incorrect: this.state.incorrect + 1
+            });
         } 
         this.generate_question();
     }
 
-    time_done() {
-        Alert.alert(
-            'Time Done',
-            "You answered " + this.state.points + " question(s) correctly!",
-            [
-                {
-                    text: "OK",
-                    onPress: () => this.finish_game()
-                }
-            ]
-        )
+    play_again() {
+        console.log("Playing again")
+        let counter_temp = parseInt(this.state.counter_id) + 1;
+        this.setState({
+            counter_id: counter_temp.toString(),
+            counter: 10,
+            correct: 0,
+            incorrect: 0
+        });
+        console.log(this.state.counter)
+        this.generate_question()
     }
 
-    finish_game() {
-        let temp = this.state.points * 1;
-        //if (temp >= 10) { this.props.updatePoints(10); }
-        //else { this.props.updatePoints(temp); }
-        //this.props.setMain(true);
+    finish_game = () => {
         this.props.updatePoints(10, this.props.mathActive)
         this.props.updatePlayerData('math', 10)
         console.log('Returning to MountainView')
         this.props.setMain(true)
+    }
+
+    time_done = () => {
+        Alert.alert(
+            'Time Done',
+            "You answered " + this.state.correct + " question(s) correctly!",
+            [
+                {
+                    text: "Try Again",
+                    onPress: () => this.play_again(),
+                },
+                {
+                    text: "Exit",
+                    onPress: () => this.finish_game(),
+                }
+
+            ]
+        )
     }
 
 render() {
@@ -178,11 +199,13 @@ render() {
             />
             <View className="points" style={points}>
                 <Text></Text>
-                <Text style={points}>Correct: {this.state.points}</Text>
+                <Text style={points}>Correct: {this.state.correct}</Text>
+                <Text style={points}>Incorrect: {this.state.incorrect}</Text>
             </View>
             <View className="countdown" style={countdown}>
                 <CountDown
-                    until={3 * 1}
+                    id={this.state.counter_id}
+                    until={this.state.counter}
                     size={50}
                     onFinish={() => this.time_done()}
                     digitStyle={{backgroundColor: '#FFF'}}
