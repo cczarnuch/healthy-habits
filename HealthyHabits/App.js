@@ -107,7 +107,7 @@ const App = () => {
 						updatePlayerData={updatePlayerData}
 						setIndex={setIndex}
 						setMain={setDisplay}
-						setMemoryActive={setMemoryActive}
+						setMedActive={setMedActive}
 					/>
 				);
 				break;
