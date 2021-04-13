@@ -69,7 +69,7 @@ const CalendarPage = (props) => {
               if ("meditation" in props.playerData[day.dateString]) { meditation_log = props.playerData[day.dateString].meditation + " points"; }
               if ("journal" in props.playerData[day.dateString]) { 
                 let temp = props.playerData[day.dateString].journal;
-                if (temp.includes(null)) { temp[1] = 0; temp[0] = "";}; 
+                if (temp.includes(null)) { temp[0] = "";}; 
                 journal_log = "Mood was a " + temp[1] + " out of 10. " + temp[0];
               }      
             }
