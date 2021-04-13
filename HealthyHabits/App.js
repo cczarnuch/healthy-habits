@@ -143,12 +143,12 @@ const App = () => {
 	const updateSetting = (setting, data) => {
 		if (setting === "theme") {
 			setDark(() => {
-				// console.log("from App ", data);
+				console.log("from App ", data);
 				return data;
 			});
 		} else if (setting === "diff") {
 			setDiffculty(() => {
-				// console.log("from App ", data);
+				console.log("from App ", data);
 				return data;
 			});
 		}
