@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Button, StyleSheet, Text, View } from 'react-native';
 import styles from '../styles/main.js';
-import m1 from '../assets/mountain1.png'; import m2 from '../assets/mountain2.png'; import m3 from '../assets/mountain3.png'; import m4 from '../assets/mountain4.png'; import m5 from '../assets/mountain5.png'; import m6 from '../assets/mountain6.png'; import m7 from '../assets/mountain7.png';
+import m1 from '../assets/mountain1.png'; import m2 from '../assets/mountain2.png'; import m3 from '../assets/mountain3.png'; import m4 from '../assets/mountain4.png'; import m5 from '../assets/mountain5.png'; import m6 from '../assets/mountain6.png'; import m7 from '../assets/mountain7.png'; import m8 from '../assets/mountain8.png'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Header, Icon, Overlay } from "react-native-elements";
 import { ImageBackground } from 'react-native';
@@ -15,11 +15,10 @@ import Setting from '../components/SettingScreen';
 const MountainView = (props) => {
 
     const [visible, setVisible] = useState(false);
-    var [score, setScore] = useState(props.points);
     var [image, setImage] = useState(m2);
 
     const displaySettingsScreen = () => {
-        console.log("toggle pressed")
+        // console.log("toggle pressed")
         setVisible(!visible);
     };
 
@@ -35,7 +34,8 @@ const MountainView = (props) => {
         else if (props.points >=40 && props.points < 60) { setImage(m4) }
         else if (props.points >= 60 && props.points < 80) { setImage(m5) }
         else if (props.points >= 80 && props.points < 100) { setImage(m6) }
-        else { setImage(m7) }
+        else if (props.points >=100 && props.points < 120) { setImage(m7) }
+        else { setImage(m8) }
     }
 
     return (
@@ -55,7 +55,7 @@ const MountainView = (props) => {
                 }}
             />
             
-            <Text style={styles.score}>Score: {score}</Text>
+            <Text style={styles.score}>Score: {props.points}</Text>
     
             </ImageBackground>
 
