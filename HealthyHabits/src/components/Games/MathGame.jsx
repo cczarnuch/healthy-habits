@@ -165,7 +165,7 @@ class MathGame extends React.Component {
             this.props.setMathActive(false);
         }
         console.log('Returning to MountainView')
-        this.props.setMain(true)
+        this.handleBack(); 
     }
 
     time_done = () => {
@@ -179,12 +179,11 @@ class MathGame extends React.Component {
 
         let points = 0;
         let message = "";
-        if (average == 100) { points = 10; message = "Perfect score!"}
-        else if (average >= 80 && average < 100) { points = 8; message = "Great score!"}
-        else if (average >= 60 && average < 80) { points = 6; message = "Decent score!"}
-        else if (average >= 40 && average < 60) { points = 4; message = "Okay score!"}
-        else if (average >= 20 && average < 40) { points = 2; message = "Oh no!"}
-        else { points = 0; message = "Oh no!" }
+        if (average >= 80) { points = 10; message = "Great score!"}
+        else if (average >= 60 && average < 80) { points = 8; message = "Decent score!"}
+        else if (average >= 40 && average < 60) { points = 6; message = "Okay score!"}
+        else if (average >= 20 && average < 40) { points = 4; message = "Oh no!"}
+        else { points = 2; message = "Oh no!" }
 
         Alert.alert(
             'Time Done',

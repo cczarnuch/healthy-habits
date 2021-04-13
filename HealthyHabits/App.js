@@ -63,12 +63,14 @@ const App = () => {
 				setDisplay(
 					<MathGame
 						updatePoints={updatePoints}
-						setMain={setDisplay}
 						mathActive={mathActive}
-						updatePlayerData={updatePlayerData}
+						setMathActive={setMathActive}
+            updatePlayerData={updatePlayerData}
+						setIndex={setIndex}
+						setMain={setDisplay}
 					/>
 				);
-				setMathActive(false);
+				//setMathActive(false);
 				break;
 			case 3:
 				setDisplay(
