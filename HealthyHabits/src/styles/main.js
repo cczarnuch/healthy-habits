@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-const color1 = '#85CBCC'
-const color2 = '#A8DEE0'
-const color3 = '#F9E2AE'
-const color4 = '#FBC78D'
-const color5 = '#A7D676'
+const color1 = '#85CBCC' // darker blue
+const color2 = '#A8DEE0' // light blue
+const color3 = '#F9E2AE' // light orange
+const color4 = '#FBC78D' // orange
+const color5 = '#A7D676' // green
 
 export default StyleSheet.create({
     container: {
@@ -40,7 +40,7 @@ export default StyleSheet.create({
         fontSize: 20
     },
     button: {
-        color: color4,
+        color: color5,
     },
     smile: {
         width: '100%',

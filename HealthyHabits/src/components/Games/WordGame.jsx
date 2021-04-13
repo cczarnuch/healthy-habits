@@ -25,39 +25,102 @@ const ShownLetters = [
     "H"
   ],
   [
-    "E",
+    "J",
     "",
     "",
-    "S",
+    "G",
     "O",
     "",
     "",
-    "F",
-    "",
-    "I",
-    "",
-    "",
+    "T",
     "",
     "U",
     "",
-    "G",
+    "",
+    "",
+    "R",
+    "",
+    "A",
+    "T",
+    ""
+  ],
+  [
+    "",
+    "",
+    "Y",
     "E",
+    "",
+    "S",
+    "",
+    "",
+    "",
+    "A",
+    "R",
+    "",
+    "",
+    "N",
+    "E",
+    "",
+    "G",
+    ""
+  ],
+  [
+    "W",
+    "",
+    "",
+    "",
+    "O",
+    "A",
+    "",
+    "A",
+    "D",
+    "",
+    "",
+    "",
+    "B",
+    "",
+    "I",
+    "",
+    "H",
+    ""
+  ],
+  [
+    "",
+    "U",
+    "",
+    "",
+    "",
+    "P",
+    "E",
+    "",
+    "L",
+    "I",
+    "",
+    "",
+    "A",
+    "",
+    "C",
+    "",
+    "P",
     ""
   ]
 ];
-const wordOneAnswer = ["FIT", "EAT"];
-const wordTwoAnswer = ["CALM", "SODA"];
-const wordThreeAnswer = ["HAPPY", "FRIES"];
-const wordFourAnswer = ["HEALTH", "BURGER"];
+const wordOneAnswer = ["FIT", "JOY", "TRY", "WIN", "FUN"];
+const wordTwoAnswer = ["CALM", "GOOD", "EASY", "GOAL", "HOPE"];
+const wordThreeAnswer = ["HAPPY", "TRUST", "HEART", "ADAPT", "BLISS"];
+const wordFourAnswer = ["HEALTH", "BREATH", "ENERGY", "BRIGHT", "ACCEPT"];
 
-const wordOneTryArray = [" I ", "E  "];
-const wordTwoTryArray = ["  LM", "SO  "];
-const wordThreeTryArray = [" A  Y", "F I  "];
-const wordFourTryArray = ["H A  H", " U GE "];
+const wordOneTryArray = [" I ", "J  ", "  Y", "W  ", " U "];
+const wordTwoTryArray = ["  LM", "GO  ", "E S ", " OA ", "  PE"];
+const wordThreeTryArray = [" A  Y", "T U  ", "  AR ", "AD   ", " LI  "];
+const wordFourTryArray = ["H A  H", " R AT ", " NE G ", "B I H ", "A C P "];
 
 const choiceAnswerArray = [
-  ["H", "F", "C", "P", "A", "L", "T", "P", "E", "T"],
-  ["R", "B", "A", "D", "E", "R", "T", "A", "R", "S"]
+  ["H", "T", "C", "P", "A", "L", "F", "P", "E", "T"],
+  ["O", "R", "T", "Y", "E", "O", "S", "H", "B", "D"],
+  ["Y", "R", "Y", "E", "H", "A", "R", "T", "E", "T"],
+  ["T", "L", "N", "R", "G", "I", "G", "T", "P", "A"],
+  ["H", "B", "O", "C", "S", "N", "F", "T", "E", "S"]
 ];
 
 const greenColor = "#A7D676";
@@ -170,7 +233,7 @@ class WordGame extends React.Component {
     this.props.setWordGameNum(this.props.WordGameNum + 1);
     console.log(this.props.WordGameNum);
     this.props.updatePoints(10, this.props.wordActive);
-    this.props.updatePlayerData("Word", 10);
+    this.props.updatePlayerData("Word", 10, , this.props.wordActive);
     Alert.alert("Great job!", "You are wordy of the crown :)", [
       {
         text: "Play Again",
@@ -297,7 +360,6 @@ class WordGame extends React.Component {
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content" // or directly
-          rightComponent={{ icon: "settings", color: "#fff" }}
           leftComponent={
             <Icon
               name="chevron-left"
@@ -357,7 +419,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordOneTry.substring(1, 20) ==
+                  this.state.wordOneTry.substring(1, 20) ==
                   wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
@@ -431,8 +493,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordOneTry.substring(0, 1) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordOneTry.substring(2, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordOneTry.substring(2, 20) ==
                   wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
@@ -509,8 +571,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordOneTry.substring(0, 2) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordOneTry.substring(3, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordOneTry.substring(3, 20) ==
                   wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
@@ -587,7 +649,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordTwoTry.substring(1, 20) ==
+                  this.state.wordTwoTry.substring(1, 20) ==
                   wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
@@ -623,7 +685,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordTwoTry.substring(1, 20) ==
+                  this.state.wordTwoTry.substring(1, 20) ==
                   wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
@@ -674,8 +736,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordTwoTry.substring(0, 1) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordTwoTry.substring(2, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordTwoTry.substring(2, 20) ==
                   wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
@@ -752,8 +814,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordTwoTry.substring(0, 2) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordTwoTry.substring(3, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordTwoTry.substring(3, 20) ==
                   wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
@@ -829,7 +891,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordTwoTry.substring(0, 3) +
-                    this.state.choiceAnswer[this.state.tempIndex] ==
+                  this.state.choiceAnswer[this.state.tempIndex] ==
                   wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   this.setState({
@@ -900,7 +962,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordThreeTry.substring(1, 20) ==
+                  this.state.wordThreeTry.substring(1, 20) ==
                   wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
@@ -975,8 +1037,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordThreeTry.substring(0, 1) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordThreeTry.substring(2, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordThreeTry.substring(2, 20) ==
                   wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
@@ -1054,8 +1116,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordThreeTry.substring(0, 2) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordThreeTry.substring(3, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordThreeTry.substring(3, 20) ==
                   wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
@@ -1133,8 +1195,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordThreeTry.substring(0, 3) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordThreeTry.substring(4, 5) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordThreeTry.substring(4, 5) ==
                   wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
@@ -1213,7 +1275,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordThreeTry.substring(0, 4) +
-                    this.state.choiceAnswer[this.state.tempIndex] ==
+                  this.state.choiceAnswer[this.state.tempIndex] ==
                   wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
@@ -1288,7 +1350,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordFourTry.substring(1, 20) ==
+                  this.state.wordFourTry.substring(1, 20) ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1362,8 +1424,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordFourTry.substring(0, 1) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordFourTry.substring(2, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordFourTry.substring(2, 20) ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1440,8 +1502,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordFourTry.substring(0, 2) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordFourTry.substring(3, 20) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordFourTry.substring(3, 20) ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1518,8 +1580,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordFourTry.substring(0, 3) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordFourTry.substring(4, 6) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordFourTry.substring(4, 6) ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1596,8 +1658,8 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordFourTry.substring(0, 4) +
-                    this.state.choiceAnswer[this.state.tempIndex] +
-                    this.state.wordFourTry.substring(5, 6) ==
+                  this.state.choiceAnswer[this.state.tempIndex] +
+                  this.state.wordFourTry.substring(5, 6) ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1673,7 +1735,7 @@ class WordGame extends React.Component {
 
                 if (
                   this.state.wordFourTry.substring(0, 5) +
-                    this.state.choiceAnswer[this.state.tempIndex] ==
+                  this.state.choiceAnswer[this.state.tempIndex] ==
                   wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
@@ -1882,7 +1944,7 @@ class WordGame extends React.Component {
     );
   }
 
-  WordOneFull = function() {
+  WordOneFull = function () {
     return {
       marginTop: 30,
       marginRight: 5,
@@ -1904,7 +1966,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W1L1Style = function() {
+  W1L1Style = function () {
     return {
       marginTop: 30,
       marginRight: 5,
@@ -1920,7 +1982,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W1L2Style = function() {
+  W1L2Style = function () {
     return {
       marginTop: 30,
       marginRight: 5,
@@ -1936,7 +1998,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W1L3Style = function() {
+  W1L3Style = function () {
     return {
       marginTop: 30,
       marginRight: 5,
@@ -1952,7 +2014,7 @@ class WordGame extends React.Component {
     };
   };
 
-  WordTwoFull = function() {
+  WordTwoFull = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -1974,7 +2036,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W2L1Style = function() {
+  W2L1Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -1990,7 +2052,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W2L2Style = function() {
+  W2L2Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2006,7 +2068,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W2L3Style = function() {
+  W2L3Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2022,7 +2084,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W2L4Style = function() {
+  W2L4Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2038,7 +2100,7 @@ class WordGame extends React.Component {
     };
   };
 
-  WordThreeFull = function() {
+  WordThreeFull = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2060,7 +2122,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W3L1Style = function() {
+  W3L1Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2076,7 +2138,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W3L2Style = function() {
+  W3L2Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2092,7 +2154,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W3L3Style = function() {
+  W3L3Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2108,7 +2170,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W3L4Style = function() {
+  W3L4Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2124,7 +2186,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W3L5Style = function() {
+  W3L5Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2140,7 +2202,7 @@ class WordGame extends React.Component {
     };
   };
 
-  WordFourFull = function() {
+  WordFourFull = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2162,7 +2224,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L1Style = function() {
+  W4L1Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2178,7 +2240,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L2Style = function() {
+  W4L2Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2194,7 +2256,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L3Style = function() {
+  W4L3Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2210,7 +2272,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L4Style = function() {
+  W4L4Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2226,7 +2288,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L5Style = function() {
+  W4L5Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2242,7 +2304,7 @@ class WordGame extends React.Component {
     };
   };
 
-  W4L6Style = function() {
+  W4L6Style = function () {
     return {
       marginTop: 50,
       marginRight: 5,
@@ -2258,7 +2320,7 @@ class WordGame extends React.Component {
     };
   };
 
-  dragContainer = function() {
+  dragContainer = function () {
     return {
       flexDirection: "row",
       justifyContent: "center",
@@ -2270,7 +2332,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragOne = function() {
+  DragOne = function () {
     return {
       marginTop: 20,
       marginRight: 5,
@@ -2286,7 +2348,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragTwo = function() {
+  DragTwo = function () {
     return {
       marginTop: 20,
       marginRight: 5,
@@ -2302,7 +2364,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragThree = function() {
+  DragThree = function () {
     return {
       marginTop: 20,
       marginRight: 5,
@@ -2318,7 +2380,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragFour = function() {
+  DragFour = function () {
     return {
       marginTop: 20,
       marginRight: 5,
@@ -2334,7 +2396,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragFive = function() {
+  DragFive = function () {
     return {
       marginTop: 20,
       marginRight: 5,
@@ -2350,7 +2412,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragSix = function() {
+  DragSix = function () {
     return {
       marginTop: -40,
       marginRight: 5,
@@ -2366,7 +2428,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragSeven = function() {
+  DragSeven = function () {
     return {
       marginTop: -40,
       marginRight: 5,
@@ -2382,7 +2444,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragEight = function() {
+  DragEight = function () {
     return {
       marginTop: -40,
       marginRight: 5,
@@ -2398,7 +2460,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragNine = function() {
+  DragNine = function () {
     return {
       marginTop: -40,
       marginRight: 5,
@@ -2414,7 +2476,7 @@ class WordGame extends React.Component {
     };
   };
 
-  DragTen = function() {
+  DragTen = function () {
     return {
       marginTop: -40,
       marginRight: 5,
