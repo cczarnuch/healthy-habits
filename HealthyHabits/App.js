@@ -105,6 +105,7 @@ const App = () => {
             updatePoints={updatePoints}
             medActive={medActive}
             updatePlayerData={updatePlayerData}
+            setIndex={setIndex}
             setMain={setDisplay}
           />
         );

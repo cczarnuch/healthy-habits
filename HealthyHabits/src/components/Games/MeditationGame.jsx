@@ -10,7 +10,6 @@ import meditationBackground from '../../assets/gradient.jpg';
 class MeditationGame extends React.Component {
     constructor(props) {
         super(props);
-        // this.props = props;
         this.fading = this.fading.bind(this);
         this.calculatePoints = this.calculatePoints.bind(this);
         this.handleBack = this.handleBack.bind(this);
