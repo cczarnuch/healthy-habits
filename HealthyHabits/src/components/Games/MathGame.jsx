@@ -167,7 +167,7 @@ class MathGame extends React.Component {
                     onPress: () => this.play_again(),
                 },
                 {
-                    text: "Exit",
+                    text: "Save & Exit",
                     onPress: () => this.finish_game(),
                 }
 
