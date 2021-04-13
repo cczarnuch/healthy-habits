@@ -73,7 +73,7 @@ class WordGame extends React.Component {
       wordThreeTry: wordThreeTryArray[this.props.WordGameNum].toString(),
       wordFourTry: wordFourTryArray[this.props.WordGameNum].toString(),
 
-      choiceAnswer: choiceAnswerArray[this.props.WordGameNum],
+      choiceAnswer: choiceAnswerArray[this.props.WordGameNum].slice(),
 
       W1L1changeBackgroundColor: lightBlueColor,
       W1L1changeBorderColor: darkBlueColor,
@@ -273,7 +273,21 @@ class WordGame extends React.Component {
 
   //return to game menu
   returnGameMenu() {
-    this.props.setIndex(2);
+    console.log(choiceAnswerArray[this.props.WordGameNum]);
+    (this.state.wordOneTry = wordOneTryArray[
+      this.props.WordGameNum
+    ].toString()),
+      (this.state.wordTwoTry = wordTwoTryArray[
+        this.props.WordGameNum
+      ].toString()),
+      (this.state.wordThreeTry = wordThreeTryArray[
+        this.props.WordGameNum
+      ].toString()),
+      (this.state.wordFourTry = wordFourTryArray[
+        this.props.WordGameNum
+      ].toString()),
+      (this.state.choiceAnswer = choiceAnswerArray[this.props.WordGameNum]),
+      this.props.setIndex(2);
     this.props.setMain(true);
   }
 
