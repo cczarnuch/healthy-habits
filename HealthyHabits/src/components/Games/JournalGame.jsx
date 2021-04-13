@@ -15,7 +15,7 @@ const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData
         console.log("submit entry button pressed")
         // console.log("response:", journalResponse, "sliderVal:", sliderVal)
         // Send values to Game Controller
-        updatePlayerData('journal', [journalResponse, sliderVal])
+        updatePlayerData('journal', [journalResponse, sliderVal], journalActive)
         updatePoints(5, journalActive)
         setIndex(2)
         setMain(true)
@@ -28,17 +28,17 @@ const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
                 barStyle="light-content" // or directly
-                leftComponent={<Icon name="arrow-left" color="white" onPress={() => setMain(true)}></Icon> }
+                leftComponent={<Icon name="chevron-left" color="white" onPress={() => setMain(true)}></Icon> }
                 centerComponent={{
                 text: "Journal Entry",
                 style: { color: "#FFF", fontSize: 22 }
                 }}
                 containerStyle={{
-                backgroundColor: "#FBC78D",
+                backgroundColor: "#A7D676",
                 justifyContent: "space-around"
                 }}
             />
-            <Text style={{fontSize: 16, textAlign: 'center', backgroundColor: '#F9E2AE'}}>Welcome to Journal Entry</Text>
+            <Text style={{fontSize: 16, textAlign: 'center', backgroundColor: '#85CBCC', color: 'white'}}>Welcome to Journal Entry</Text>
             <Text style={{fontSize: 16, textAlign: 'center', paddingTop: 10}}>This minigame is meant to help you reflect on your day, the good and the bad.</Text>
             
             <TextInput 
