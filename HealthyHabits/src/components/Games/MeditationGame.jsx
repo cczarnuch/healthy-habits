@@ -14,8 +14,8 @@ class MeditationGame extends React.Component {
         this.calculatePoints = this.calculatePoints.bind(this);
         this.handleBack = this.handleBack.bind(this);
 
-        this.fadeAnim = new Animated.Value(1);
-        this.sizeAnim = new Animated.Value(1);
+        this.fadeAnim = new Animated.Value(0.2);
+        this.sizeAnim = new Animated.Value(0.7);
         this.state = {
             sliderVal: 1,
             buttonText: "Start",
@@ -28,24 +28,24 @@ class MeditationGame extends React.Component {
             Animated.parallel([
                 Animated.sequence([
                     Animated.timing(this.fadeAnim, {
-                        toValue: 0.2,
+                        toValue: 1,
                         duration: 5000,
                         useNativeDriver: true
                     }),
                     Animated.timing(this.fadeAnim, {
-                        toValue: 1,
+                        toValue: 0.2,
                         duration: 5000,
                         useNativeDriver: true
                     })
                 ]),
                 Animated.sequence([
                     Animated.timing(this.sizeAnim, {
-                        toValue: 0.7,
+                        toValue: 1,
                         duration: 5000,
                         useNativeDriver: true
                     }),
                     Animated.timing(this.sizeAnim, {
-                        toValue: 1,
+                        toValue: 0.7,
                         duration: 5000,
                         useNativeDriver: true
                     })

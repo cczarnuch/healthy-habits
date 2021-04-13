@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, Button } from "react-native"; // Image will change to video
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native"; // Image will change to video
 import useTimer from '../hooks/useTimer';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header, Icon } from 'react-native-elements';
@@ -78,19 +78,30 @@ const WorkoutGame = ({ setMain, updatePoints, workoutActive, updatePlayerData, s
 					justifyContent: "space-around"
 				}}
 			/>
-			{ screen ? <View>
+			{ screen ? <View style={{alignItems: 'center'}}>
 				<Image style={styles.video} source={video} />
 				<Text style={styles.txt}>{display}</Text>
-				<Button color={color1} title='Start' onPress={() => {
+
+				<TouchableOpacity style={styles.bigButton} onPress={() => {
 					setScreen(false)
 					handleStart()
-				}} />
-			</View> : <View>
+				}}>
+					<Text style={styles.buttonTextStyle}>
+						Start
+					</Text>
+				</TouchableOpacity>
+
+
+			</View> : <View style={{alignItems: 'center'}}>
 				<Image style={styles.video} source={video} />
 				<Text style={styles.txt}>{formatTime(timer)}</Text>
-				<Button color={color1} title={repNumber !== MAX_repNumber ? 'Continue' : "Done! You've earned 5 points."}
-					disabled={isActive}
-					onPress={handleContinue} />
+
+				<TouchableOpacity style={styles.bigButton} disabled={isActive} onPress={handleContinue}>
+					<Text style={styles.buttonTextStyle}>
+						{repNumber !== MAX_repNumber ? 'Continue' : "Done!"}
+					</Text>
+				</TouchableOpacity>
+
 			</View>}
 		</SafeAreaProvider>
 	)
@@ -114,7 +125,7 @@ const styles = StyleSheet.create({
 	txt: {
 		fontSize: 80,
 		textAlign: 'center',
-		marginTop: '30%'
+		marginTop: '15%'
 	},
 	video: {
 		width: '100%',
@@ -130,7 +141,24 @@ const styles = StyleSheet.create({
 	},
 	bg: {
 		backgroundColor: color3
-	}
+	},
+	bigButton: {
+		width: "40%",
+		height: "10%",
+		backgroundColor: "#779FE7",
+		borderRadius: 10,
+		borderColor: "#fff",
+		borderWidth: 1,
+		marginHorizontal: "5%",
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	buttonTextStyle: {
+		fontSize: 24,
+		color: "white",
+		textAlign: "center",
+		marginVertical: 20,
+	},
 })
 
 export default WorkoutGame
