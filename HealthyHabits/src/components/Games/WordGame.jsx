@@ -233,7 +233,7 @@ class WordGame extends React.Component {
     this.props.setWordGameNum(this.props.WordGameNum + 1);
     console.log(this.props.WordGameNum);
     this.props.updatePoints(10, this.props.wordActive);
-    this.props.updatePlayerData("Word", 10, , this.props.wordActive);
+    this.props.updatePlayerData("Word", 10, this.props.wordActive);
     Alert.alert("Great job!", "You are wordy of the crown :)", [
       {
         text: "Play Again",

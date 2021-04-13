@@ -10,6 +10,7 @@ import MathGame from "./src/components/Games/MathGame";
 import MemoryGame from "./src/components/Games/MemoryGame";
 import JournalGame from "./src/components/Games/JournalGame";
 import WordGame from "./src/components/Games/WordGame";
+import MeditationGame from "./src/components/Games/MeditationGame";
 
 const App = () => {
 	const [display, setDisplay] = useState(true);
@@ -38,88 +39,92 @@ const App = () => {
 		}
 	});
 
-	const [workoutActive, setWorkoutActive] = useState(true);
-	const [mathActive, setMathActive] = useState(true);
-	const [wordActive, setWordActive] = useState(true);
-	const [memoryActive, setMemoryActive] = useState(true);
-	// const [medActive, setMedActive] = useState(true)
-	const [journalActive, setJournalActive] = useState(true);
+  const [workoutActive, setWorkoutActive] = useState(true);
+  const [mathActive, setMathActive] = useState(true);
+  const [wordActive, setWordActive] = useState(true);
+  const [memoryActive, setMemoryActive] = useState(true);
+  const [medActive, setMedActive] = useState(true);
+  const [journalActive, setJournalActive] = useState(true);
 
-	const handleGame = gameId => {
-		switch (gameId) {
-			case 1:
-				setDisplay(
-					<WorkoutGame
-						updatePoints={updatePoints}
-						setMain={setDisplay}
-						setIndex={setIndex}
-						workoutActive={workoutActive}
-						updatePlayerData={updatePlayerData}
-					/>
-				);
-				setWorkoutActive(false);
-				break;
-			case 2:
-				setDisplay(
-					<MathGame
-						updatePoints={updatePoints}
-						mathActive={mathActive}
-						setMathActive={setMathActive}
+  const handleGame = gameId => {
+    switch (gameId) {
+      case 1:
+        setWorkoutActive(false);
+        setDisplay(
+          <WorkoutGame
+            updatePoints={updatePoints}
+            setMain={setDisplay}
+            workoutActive={workoutActive}
             updatePlayerData={updatePlayerData}
-						setIndex={setIndex}
-						setMain={setDisplay}
-					/>
-				);
-				//setMathActive(false);
-				break;
-			case 3:
-				setDisplay(
-					<WordGame
-						updatePoints={updatePoints}
-						wordActive={wordActive}
-						updatePlayerData={updatePlayerData}
-						setIndex={setIndex}
-						setMain={setDisplay}
-						setWordGameNum={setWordGameNum}
-						WordGameNum={WordGameNum}
-					/>
-				);
-				setWordActive(false);
-				break;
-			case 4:
-				setDisplay(
-					<MemoryGame
-						updatePoints={updatePoints}
-						memoryActive={memoryActive}
-						updatePlayerData={updatePlayerData}
-						setIndex={setIndex}
-						setMain={setDisplay}
-						diffculty={diffculty}
-						dark={dark}
-					/>
-				);
-				setMemoryActive(false);
-				break;
-			case 5:
-				setDisplay(<MeditationGame updatePoints={updatePoints} />);
-				setMedActive(false)
-				break;
-			case 6:
-				setDisplay(
-					<JournalGame
-						updatePoints={updatePoints}
-						journalActive={journalActive}
-						updatePlayerData={updatePlayerData}
-						setMain={setDisplay}
-						setIndex={setIndex}
-					/>
-				);
-				setJournalActive(false);
-				break;
-			default:
-				setDisplay(true);
-		}
-	};
+          />
+        );
+        break;
+      case 2:
+        setMathActive(false);
+        setDisplay(
+          <MathGame
+            updatePoints={updatePoints}
+            setMain={setDisplay}
+            mathActive={mathActive}
+            updatePlayerData={updatePlayerData}
+          />
+        );
+        break;
+      case 3:
+        setWordActive(false);
+        setDisplay(
+          <WordGame
+            updatePoints={updatePoints}
+            wordActive={wordActive}
+            updatePlayerData={updatePlayerData}
+            setIndex={setIndex}
+            setMain={setDisplay}
+            setWordGameNum={setWordGameNum}
+            WordGameNum={WordGameNum}
+          />
+        );
+        break;
+      case 4:
+        setMemoryActive(false);
+        setDisplay(
+          <MemoryGame
+            updatePoints={updatePoints}
+            memoryActive={memoryActive}
+            updatePlayerData={updatePlayerData}
+            setIndex={setIndex}
+            setMain={setDisplay}
+            diffculty={diffculty}
+            dark={dark}
+          />
+        );
+        break;
+      case 5:
+        setMedActive(false)
+        setDisplay(
+          <MeditationGame
+            updatePoints={updatePoints}
+            medActive={medActive}
+            updatePlayerData={updatePlayerData}
+            setIndex={setIndex}
+            setMain={setDisplay}
+          />
+        );
+        break;
+      case 6:
+        setDisplay(
+          <JournalGame
+            updatePoints={updatePoints}
+            journalActive={journalActive}
+            updatePlayerData={updatePlayerData}
+            setMain={setDisplay}
+          />
+        );
+        setJournalActive(false);
+        break;
+      default:
+        setDisplay(true);
+    }
+  };
 
 	const updatePoints = (number, gameActive) => {
 		if (gameActive) {
