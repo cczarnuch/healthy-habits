@@ -91,7 +91,7 @@ export default class MemoryGame extends Component {
             style: { color: "#FFF", fontSize: 22 }
           }}
           containerStyle={{
-            backgroundColor: color1,
+            backgroundColor: "#A7D676",
             justifyContent: "space-around"
         }}/>
         <View style={styles.innerContainer}>
@@ -216,7 +216,7 @@ export default class MemoryGame extends Component {
           onPress: () => this.playAgain(),
         },
         {
-          text: "View Progress",
+          text: "Back to Menu",
           onPress: () => this.viewProgress(),
         }
       ]
@@ -302,7 +302,7 @@ export default class MemoryGame extends Component {
 
   viewProgress(){
 
-    this.props.setIndex(1);
+    this.props.setIndex(2);
     this.props.setMain(true);
   }
 }
