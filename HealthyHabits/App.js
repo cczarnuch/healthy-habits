@@ -1,10 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useState } from "react";
 import Swiper from "react-native-swiper/src";
 import CalendarPage from "./src/components/Calendar";
 import MountainView from "./src/components/MountainView";
 import GameDisplay from "./src/components/GameDisplay";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import WorkoutGame from "./src/components/Games/WorkoutGame";
 import MathGame from "./src/components/Games/MathGame";
 import MemoryGame from "./src/components/Games/MemoryGame";

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import { View, Alert } from "react-native";
+import { CalendarList } from "react-native-calendars";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header, Icon, Overlay } from "react-native-elements";
-import { Dayjs } from "dayjs";
 import Setting from '../components/SettingScreen';
 import styles from '../styles/main'
 

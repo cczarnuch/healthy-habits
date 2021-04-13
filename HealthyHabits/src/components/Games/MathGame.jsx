@@ -1,8 +1,7 @@
 import React from "react";
 import { Header, Icon } from 'react-native-elements';
-import { Button, StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { Button, Text, View, Alert } from "react-native";
 import CountDown from 'react-native-countdown-component';
-import {Ionicons} from '@expo/vector-icons';
 
 class MathGame extends React.Component {
     constructor(props) {

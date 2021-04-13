@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Animated, View, Text, TouchableOpacity } from "react-native";
 import { Header, Slider, Icon } from "react-native-elements";
 import { BackgroundImage } from "react-native-elements/dist/config";

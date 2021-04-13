@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Alert, TouchableNativeFeedbackBase } from 'react-native';
-import {Overlay, Header, Icon} from 'react-native-elements';
-import {Ionicons} from '@expo/vector-icons';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native';
+import { Overlay, Header, Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 /*###########################################################################
                               Main

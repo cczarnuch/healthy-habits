@@ -1,9 +1,8 @@
-import { setStatusBarTranslucent } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, Button } from "react-native"; // Image will change to video
 import useTimer from '../hooks/useTimer';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Overlay, Header, Icon } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 
 import jumpingJacks from '../../assets/workouts/jj.png'
 import planks from '../../assets/workouts/p.png'
