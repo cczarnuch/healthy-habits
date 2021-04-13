@@ -52,4 +52,22 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: "#000",
     },
+    bigButton: {
+        width: "40%",
+        height: "25%",
+        backgroundColor: "#779FE7",
+        borderRadius: 10,
+        borderColor: "#fff",
+        borderWidth: 1,
+        marginHorizontal: "5%",
+        marginTop: 80,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonTextStyle: {
+        fontSize: 24,
+        color: "white",
+        textAlign: "center",
+        marginVertical: 20,
+    },
 })

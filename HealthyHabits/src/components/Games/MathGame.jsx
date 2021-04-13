@@ -1,8 +1,7 @@
 import React from "react";
 import { Header, Icon } from 'react-native-elements';
-import { Button, StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, Alert, TouchableOpacity } from "react-native";
 import CountDown from 'react-native-countdown-component';
-import {Ionicons} from '@expo/vector-icons';
 
 class MathGame extends React.Component {
     constructor(props) {
@@ -205,7 +204,6 @@ class MathGame extends React.Component {
 render() {
     return (
         <View className="container" style={body}>
-            <Text></Text>
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
                 barStyle="light-content"
@@ -246,30 +244,29 @@ render() {
                 <Text></Text>
                 <Text style={question}>{this.state.question_1} {this.state.question_sign} {this.state.question_2} = ?</Text>
             </View>
-            <View className="answers" style={answers}>
-                <Button 
-                    color="#85CBCC"
-                    onPress={() => this.check_answer(this.state.answers[0])}
-                    title={String(this.state.answers[0])}>
-                </Button>
-                <Text></Text>
-                <Button 
-                    color="#85CBCC"
-                    onPress={() => this.check_answer(this.state.answers[1])}
-                    title={String(this.state.answers[1])}>
-                </Button>
-                <Text></Text>
-                <Button 
-                    color="#85CBCC"
-                    onPress={() => this.check_answer(this.state.answers[2])}
-                    title={String(this.state.answers[2])}>
-                </Button>
-                <Text></Text>
-                <Button 
-                    color="#85CBCC"
-                    onPress={() => this.check_answer(this.state.answers[3])}
-                    title={String(this.state.answers[3])}>
-                </Button>
+            <View className="answers" style={{flex: 1, alignItems: 'center', marginTop: 100}}>
+                <TouchableOpacity style={bigButton} onPress={() => this.check_answer(this.state.answers[0])}>
+                    <Text style={buttonTextStyle}>
+                        {this.state.answers[0]}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={bigButton} onPress={() => this.check_answer(this.state.answers[1])}>
+                    <Text style={buttonTextStyle}>
+                        {this.state.answers[1]}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={bigButton} onPress={() => this.check_answer(this.state.answers[2])}>
+                    <Text style={buttonTextStyle}>
+                        {this.state.answers[2]}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={bigButton} onPress={() => this.check_answer(this.state.answers[3])}>
+                    <Text style={buttonTextStyle}>
+                        {this.state.answers[3]}
+                    </Text>
+                </TouchableOpacity>
+
+
             </View>
         </View>
     );
@@ -281,12 +278,6 @@ const body = {
     fontSize: 50,
     textAlign: "center",
     backgroundColor: "#F9E2AE"
-};
-const title = {
-    position: "relative",
-    top: 10,
-    fontSize: 50,
-    textAlign: "center",
 };
 const points = {
     position: "relative",
@@ -309,18 +300,21 @@ const question = {
     fontSize: 40,
     textAlign: "center",
 };
-const answers = {
-    position: "absolute",
-    bottom: 30,
-    left: 0, 
-    right: 0,
+const bigButton = {
+    width: "40%",
+    height: "12%",
+    backgroundColor: "#779FE7",
+    borderRadius: 10,
+    borderColor: "#fff",
+    borderWidth: 1,
+    marginHorizontal: "5%",
+    marginTop: "2%",
+    justifyContent: 'center'
+};
+const buttonTextStyle = {
     fontSize: 20,
+    color: "white",
     textAlign: "center"
 };
-
-const back = {
-    flex: 1,
-    alignSelf: 'flex-start'
-}
 
 export default MathGame;
