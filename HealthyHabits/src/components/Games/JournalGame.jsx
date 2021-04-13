@@ -7,7 +7,7 @@ import styles from '../../styles/main.js';
 import journalBackground from '../../assets/gradient.jpg';
 import smiley from '../../assets/smileyrating.png';
 
-const JournalGame = ({ updatePoints, journalActive, updatePlayerData, setMain, setIndex }) => {
+const JournalGame = ({ updatePoints, journalActive, updatePlayerData, setMain, setJournalActive, setIndex }) => {
     const [journalResponse, onChangeText] = React.useState(null);
     const [sliderVal, setSliderValue] = React.useState(0);
 
@@ -17,6 +17,7 @@ const JournalGame = ({ updatePoints, journalActive, updatePlayerData, setMain, s
         // Send values to Game Controller
         updatePlayerData('journal', [journalResponse, sliderVal], journalActive)
         updatePoints(5, journalActive)
+        setJournalActive(false)
         setIndex(2)
         setMain(true)
     }
