@@ -1,33 +1,64 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Header } from "react-native-elements";
+import { Header, Icon } from "react-native-elements";
 
 const ShownLetters = [
-  "",
-  "I",
-  "",
-  "",
-  "",
-  "L",
-  "M",
-  "",
-  "A",
-  "",
-  "",
-  "Y",
-  "H",
-  "",
-  "A",
-  "",
-  "",
-  "H"
+  [
+    "",
+    "I",
+    "",
+    "",
+    "",
+    "L",
+    "M",
+    "",
+    "A",
+    "",
+    "",
+    "Y",
+    "H",
+    "",
+    "A",
+    "",
+    "",
+    "H"
+  ],
+  [
+    "E",
+    "",
+    "",
+    "S",
+    "O",
+    "",
+    "",
+    "F",
+    "",
+    "I",
+    "",
+    "",
+    "",
+    "U",
+    "",
+    "G",
+    "E",
+    ""
+  ]
 ];
+const wordOneAnswer = ["FIT", "EAT"];
+const wordTwoAnswer = ["CALM", "SODA"];
+const wordThreeAnswer = ["HAPPY", "FRIES"];
+const wordFourAnswer = ["HEALTH", "BURGER"];
 
-const wordOneAnswer = "FIT";
-const wordTwoAnswer = "CALM";
-const wordThreeAnswer = "HAPPY";
-const wordFourAnswer = "HEALTH";
+const wordOneTryArray = [" I ", "E  "];
+const wordTwoTryArray = ["  LM", "SO  "];
+const wordThreeTryArray = [" A  Y", "F I  "];
+const wordFourTryArray = ["H A  H", " U GE "];
+
+const choiceAnswerArray = [
+  ["H", "F", "C", "P", "A", "L", "T", "P", "E", "T"],
+  ["R", "B", "A", "D", "E", "R", "T", "A", "R", "S"]
+];
 
 const greenColor = "#A7D676";
 const lightBlueColor = "#A8DEE0";
@@ -37,10 +68,12 @@ class WordGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wordOneTry: " I ",
-      wordTwoTry: "  LM",
-      wordThreeTry: " A  Y",
-      wordFourTry: "H A  H",
+      wordOneTry: wordOneTryArray[this.props.WordGameNum].toString(),
+      wordTwoTry: wordTwoTryArray[this.props.WordGameNum].toString(),
+      wordThreeTry: wordThreeTryArray[this.props.WordGameNum].toString(),
+      wordFourTry: wordFourTryArray[this.props.WordGameNum].toString(),
+
+      choiceAnswer: choiceAnswerArray[this.props.WordGameNum],
 
       W1L1changeBackgroundColor: lightBlueColor,
       W1L1changeBorderColor: darkBlueColor,
@@ -100,33 +133,32 @@ class WordGame extends React.Component {
       score: 0,
       tempIndex: -1,
 
-      choiceAnswer: ["H", "F", "C", "P", "A", "L", "T", "P", "E", "T"],
+      W1L1: ShownLetters[this.props.WordGameNum][0],
+      W1L2: ShownLetters[this.props.WordGameNum][1],
+      W1L3: ShownLetters[this.props.WordGameNum][2],
 
-      W1L1: ShownLetters[0],
-      W1L2: ShownLetters[1],
-      W1L3: ShownLetters[2],
+      W2L1: ShownLetters[this.props.WordGameNum][3],
+      W2L2: ShownLetters[this.props.WordGameNum][4],
+      W2L3: ShownLetters[this.props.WordGameNum][5],
+      W2L4: ShownLetters[this.props.WordGameNum][6],
 
-      W2L1: ShownLetters[3],
-      W2L2: ShownLetters[4],
-      W2L3: ShownLetters[5],
-      W2L4: ShownLetters[6],
+      W3L1: ShownLetters[this.props.WordGameNum][7],
+      W3L2: ShownLetters[this.props.WordGameNum][8],
+      W3L3: ShownLetters[this.props.WordGameNum][9],
+      W3L4: ShownLetters[this.props.WordGameNum][10],
+      W3L5: ShownLetters[this.props.WordGameNum][11],
 
-      W3L1: ShownLetters[7],
-      W3L2: ShownLetters[8],
-      W3L3: ShownLetters[9],
-      W3L4: ShownLetters[10],
-      W3L5: ShownLetters[11],
-
-      W4L1: ShownLetters[12],
-      W4L2: ShownLetters[13],
-      W4L3: ShownLetters[14],
-      W4L4: ShownLetters[15],
-      W4L5: ShownLetters[16],
-      W4L6: ShownLetters[17]
+      W4L1: ShownLetters[this.props.WordGameNum][12],
+      W4L2: ShownLetters[this.props.WordGameNum][13],
+      W4L3: ShownLetters[this.props.WordGameNum][14],
+      W4L4: ShownLetters[this.props.WordGameNum][15],
+      W4L5: ShownLetters[this.props.WordGameNum][16],
+      W4L6: ShownLetters[this.props.WordGameNum][17]
     };
   }
 
   findSpace() {
+    console.log(this.state.wordOneTry);
     for (let i = 0; i < this.state.choiceAnswer.length; i++) {
       if (this.state.choiceAnswer[i] == "") {
         return i;
@@ -135,14 +167,16 @@ class WordGame extends React.Component {
   }
 
   createWinAlert() {
+    this.props.setWordGameNum(this.props.WordGameNum + 1);
+    console.log(this.props.WordGameNum);
     this.props.updatePoints(10, this.props.wordActive);
-    this.props.updatePlayerData("Word",10);
-    Alert.alert("You Won!", "You are wordy of the crown :)", [
+    this.props.updatePlayerData("Word", 10);
+    Alert.alert("Great job!", "You are wordy of the crown :)", [
       {
         text: "Play Again",
         onPress: () => console.log("Cancel Pressed")
       },
-      { text: "Game Menu", onPress: () => this.props.setMain(true) }
+      { text: "Game Menu", onPress: () => this.returnGameMenu() }
     ]);
   }
 
@@ -237,6 +271,12 @@ class WordGame extends React.Component {
     }
   }
 
+  //return to game menu
+  returnGameMenu() {
+    this.props.setIndex(2);
+    this.props.setMain(true);
+  }
+
   render() {
     return (
       <SafeAreaProvider>
@@ -244,6 +284,14 @@ class WordGame extends React.Component {
           statusBarProps={{ barStyle: "light-content" }}
           barStyle="light-content" // or directly
           rightComponent={{ icon: "settings", color: "#fff" }}
+          leftComponent={
+            <Icon
+              name="chevron-left"
+              color="white"
+              size={30}
+              onPress={() => this.returnGameMenu()}
+            ></Icon>
+          }
           centerComponent={{
             text: "Word Game",
             style: { color: "#FFF", fontSize: 26 }
@@ -268,7 +316,9 @@ class WordGame extends React.Component {
         <View style={styleShape.container}>
           <TouchableOpacity
             style={
-              ShownLetters[0] == "" ? this.W1L1Style() : this.WordOneFull()
+              ShownLetters[this.props.WordGameNum][0] == ""
+                ? this.W1L1Style()
+                : this.WordOneFull()
             }
             onPress={() => {
               if (
@@ -294,7 +344,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordOneTry.substring(1, 20) ==
-                  wordOneAnswer
+                  wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
                     this.createWinAlert();
@@ -307,7 +357,9 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
 
                 this.state.tempIndex = -1;
-              } else if (this.state.wordOneTry != wordOneAnswer) {
+              } else if (
+                this.state.wordOneTry != wordOneAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -329,7 +381,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[0] != "" || this.state.wordOneTry == wordOneAnswer
+              ShownLetters[this.props.WordGameNum][0] != "" ||
+              this.state.wordOneTry == wordOneAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W1L1}</Text>
@@ -337,7 +390,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[1] == "" ? this.W1L2Style() : this.WordOneFull()
+              ShownLetters[this.props.WordGameNum][1] == ""
+                ? this.W1L2Style()
+                : this.WordOneFull()
             }
             onPress={() => {
               if (
@@ -364,7 +419,7 @@ class WordGame extends React.Component {
                   this.state.wordOneTry.substring(0, 1) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordOneTry.substring(2, 20) ==
-                  wordOneAnswer
+                  wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
                     this.createWinAlert();
@@ -377,7 +432,9 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
 
                 this.state.tempIndex = -1;
-              } else if (this.state.wordOneTry != wordOneAnswer) {
+              } else if (
+                this.state.wordOneTry != wordOneAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -401,7 +458,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[1] != "" || this.state.wordOneTry == wordOneAnswer
+              ShownLetters[this.props.WordGameNum][1] != "" ||
+              this.state.wordOneTry == wordOneAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W1L2}</Text>
@@ -409,7 +467,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[2] == "" ? this.W1L3Style() : this.WordOneFull()
+              ShownLetters[this.props.WordGameNum][2] == ""
+                ? this.W1L3Style()
+                : this.WordOneFull()
             }
             onPress={() => {
               if (
@@ -437,7 +497,7 @@ class WordGame extends React.Component {
                   this.state.wordOneTry.substring(0, 2) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordOneTry.substring(3, 20) ==
-                  wordOneAnswer
+                  wordOneAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 1 == 10) {
                     this.createWinAlert();
@@ -450,7 +510,9 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
 
                 this.state.tempIndex = -1;
-              } else if (this.state.wordOneTry != wordOneAnswer) {
+              } else if (
+                this.state.wordOneTry != wordOneAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W1L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -474,7 +536,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[2] != "" || this.state.wordOneTry == wordOneAnswer
+              ShownLetters[this.props.WordGameNum][2] != "" ||
+              this.state.wordOneTry == wordOneAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W1L3}</Text>
@@ -484,7 +547,9 @@ class WordGame extends React.Component {
         <View style={styleShape.container}>
           <TouchableOpacity
             style={
-              ShownLetters[3] == "" ? this.W2L1Style() : this.WordTwoFull()
+              ShownLetters[this.props.WordGameNum][3] == ""
+                ? this.W2L1Style()
+                : this.WordTwoFull()
             }
             onPress={() => {
               if (
@@ -509,7 +574,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordTwoTry.substring(1, 20) ==
-                  wordTwoAnswer
+                  wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
                     this.createWinAlert();
@@ -520,7 +585,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordTwoTry != wordTwoAnswer) {
+              } else if (
+                this.state.wordTwoTry != wordTwoAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -543,7 +610,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordTwoTry.substring(1, 20) ==
-                  wordTwoAnswer
+                  wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
                     this.createWinAlert();
@@ -557,7 +624,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[3] != "" || this.state.wordTwoTry == wordTwoAnswer
+              ShownLetters[this.props.WordGameNum][3] != "" ||
+              this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W2L1}</Text>
@@ -565,7 +633,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[4] == "" ? this.W2L2Style() : this.WordTwoFull()
+              ShownLetters[this.props.WordGameNum][4] == ""
+                ? this.W2L2Style()
+                : this.WordTwoFull()
             }
             onPress={() => {
               if (
@@ -592,7 +662,7 @@ class WordGame extends React.Component {
                   this.state.wordTwoTry.substring(0, 1) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordTwoTry.substring(2, 20) ==
-                  wordTwoAnswer
+                  wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
                     this.createWinAlert();
@@ -603,7 +673,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordTwoTry != wordTwoAnswer) {
+              } else if (
+                this.state.wordTwoTry != wordTwoAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -630,7 +702,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[4] != "" || this.state.wordTwoTry == wordTwoAnswer
+              ShownLetters[this.props.WordGameNum][4] != "" ||
+              this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W2L2}</Text>
@@ -638,7 +711,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[5] == "" ? this.W2L3Style() : this.WordTwoFull()
+              ShownLetters[this.props.WordGameNum][5] == ""
+                ? this.W2L3Style()
+                : this.WordTwoFull()
             }
             onPress={() => {
               if (
@@ -665,7 +740,7 @@ class WordGame extends React.Component {
                   this.state.wordTwoTry.substring(0, 2) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordTwoTry.substring(3, 20) ==
-                  wordTwoAnswer
+                  wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 2 == 10) {
                     this.createWinAlert();
@@ -676,7 +751,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordTwoTry != wordTwoAnswer) {
+              } else if (
+                this.state.wordTwoTry != wordTwoAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -703,7 +780,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[5] != "" || this.state.wordTwoTry == wordTwoAnswer
+              ShownLetters[this.props.WordGameNum][5] != "" ||
+              this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W2L3}</Text>
@@ -711,7 +789,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[6] == "" ? this.W2L4Style() : this.WordTwoFull()
+              ShownLetters[this.props.WordGameNum][6] == ""
+                ? this.W2L4Style()
+                : this.WordTwoFull()
             }
             onPress={() => {
               if (
@@ -736,7 +816,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.wordTwoTry.substring(0, 3) +
                     this.state.choiceAnswer[this.state.tempIndex] ==
-                  wordTwoAnswer
+                  wordTwoAnswer[this.props.WordGameNum]
                 ) {
                   this.setState({
                     score: this.state.score + 2
@@ -744,7 +824,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordTwoTry != wordTwoAnswer) {
+              } else if (
+                this.state.wordTwoTry != wordTwoAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W2L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -768,7 +850,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[6] != "" || this.state.wordTwoTry == wordTwoAnswer
+              ShownLetters[this.props.WordGameNum][6] != "" ||
+              this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W2L4}</Text>
@@ -777,7 +860,9 @@ class WordGame extends React.Component {
         <View style={styleShape.container}>
           <TouchableOpacity
             style={
-              ShownLetters[7] == "" ? this.W3L1Style() : this.WordThreeFull()
+              ShownLetters[this.props.WordGameNum][7] == ""
+                ? this.W3L1Style()
+                : this.WordThreeFull()
             }
             onPress={() => {
               if (
@@ -802,7 +887,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordThreeTry.substring(1, 20) ==
-                  wordThreeAnswer
+                  wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
                     this.createWinAlert();
@@ -813,7 +898,10 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordThreeTry != wordThreeAnswer) {
+              } else if (
+                this.state.wordThreeTry !=
+                wordThreeAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -837,8 +925,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[7] != "" ||
-              this.state.wordThreeTry == wordThreeAnswer
+              ShownLetters[this.props.WordGameNum][7] != "" ||
+              this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W3L1}</Text>
@@ -846,7 +934,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[8] == "" ? this.W3L2Style() : this.WordThreeFull()
+              ShownLetters[this.props.WordGameNum][8] == ""
+                ? this.W3L2Style()
+                : this.WordThreeFull()
             }
             onPress={() => {
               if (
@@ -873,7 +963,7 @@ class WordGame extends React.Component {
                   this.state.wordThreeTry.substring(0, 1) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordThreeTry.substring(2, 20) ==
-                  wordThreeAnswer
+                  wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
                     this.createWinAlert();
@@ -884,7 +974,10 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordThreeTry != wordThreeAnswer) {
+              } else if (
+                this.state.wordThreeTry !=
+                wordThreeAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -911,8 +1004,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[8] != "" ||
-              this.state.wordThreeTry == wordThreeAnswer
+              ShownLetters[this.props.WordGameNum][8] != "" ||
+              this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W3L2}</Text>
@@ -920,7 +1013,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[9] == "" ? this.W3L3Style() : this.WordThreeFull()
+              ShownLetters[this.props.WordGameNum][9] == ""
+                ? this.W3L3Style()
+                : this.WordThreeFull()
             }
             onPress={() => {
               if (
@@ -947,7 +1042,7 @@ class WordGame extends React.Component {
                   this.state.wordThreeTry.substring(0, 2) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordThreeTry.substring(3, 20) ==
-                  wordThreeAnswer
+                  wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
                     this.createWinAlert();
@@ -958,7 +1053,10 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordThreeTry != wordThreeAnswer) {
+              } else if (
+                this.state.wordThreeTry !=
+                wordThreeAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -985,8 +1083,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[9] != "" ||
-              this.state.wordThreeTry == wordThreeAnswer
+              ShownLetters[this.props.WordGameNum][9] != "" ||
+              this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W3L3}</Text>
@@ -994,7 +1092,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[10] == "" ? this.W3L4Style() : this.WordThreeFull()
+              ShownLetters[this.props.WordGameNum][10] == ""
+                ? this.W3L4Style()
+                : this.WordThreeFull()
             }
             onPress={() => {
               if (
@@ -1021,7 +1121,7 @@ class WordGame extends React.Component {
                   this.state.wordThreeTry.substring(0, 3) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordThreeTry.substring(4, 5) ==
-                  wordThreeAnswer
+                  wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
                     this.createWinAlert();
@@ -1034,7 +1134,10 @@ class WordGame extends React.Component {
                 this.state.choiceAnswer[this.state.tempIndex] = "";
 
                 this.state.tempIndex = -1;
-              } else if (this.state.wordThreeTry != wordThreeAnswer) {
+              } else if (
+                this.state.wordThreeTry !=
+                wordThreeAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1061,8 +1164,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[10] != "" ||
-              this.state.wordThreeTry == wordThreeAnswer
+              ShownLetters[this.props.WordGameNum][10] != "" ||
+              this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W3L4}</Text>
@@ -1070,7 +1173,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[11] == "" ? this.W3L5Style() : this.WordThreeFull()
+              ShownLetters[this.props.WordGameNum][11] == ""
+                ? this.W3L5Style()
+                : this.WordThreeFull()
             }
             onPress={() => {
               if (
@@ -1095,7 +1200,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.wordThreeTry.substring(0, 4) +
                     this.state.choiceAnswer[this.state.tempIndex] ==
-                  wordThreeAnswer
+                  wordThreeAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 3 == 10) {
                     this.createWinAlert();
@@ -1106,7 +1211,10 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordThreeTry != wordThreeAnswer) {
+              } else if (
+                this.state.wordThreeTry !=
+                wordThreeAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W3L5");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1130,8 +1238,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[11] != "" ||
-              this.state.wordThreeTry == wordThreeAnswer
+              ShownLetters[this.props.WordGameNum][11] != "" ||
+              this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W3L5}</Text>
@@ -1140,7 +1248,9 @@ class WordGame extends React.Component {
         <View style={styleShape.container}>
           <TouchableOpacity
             style={
-              ShownLetters[12] == "" ? this.W4L1Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][12] == ""
+                ? this.W4L1Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1165,7 +1275,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordFourTry.substring(1, 20) ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1176,7 +1286,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L1");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1200,7 +1312,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[12] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][12] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L1}</Text>
@@ -1208,7 +1321,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[13] == "" ? this.W4L2Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][13] == ""
+                ? this.W4L2Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1235,7 +1350,7 @@ class WordGame extends React.Component {
                   this.state.wordFourTry.substring(0, 1) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordFourTry.substring(2, 20) ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1246,7 +1361,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L2");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1273,7 +1390,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[13] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][13] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L2}</Text>
@@ -1281,7 +1399,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[14] == "" ? this.W4L3Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][14] == ""
+                ? this.W4L3Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1308,7 +1428,7 @@ class WordGame extends React.Component {
                   this.state.wordFourTry.substring(0, 2) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordFourTry.substring(3, 20) ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1319,7 +1439,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L3");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1346,7 +1468,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[14] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][14] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L3}</Text>
@@ -1354,7 +1477,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[15] == "" ? this.W4L4Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][15] == ""
+                ? this.W4L4Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1381,7 +1506,7 @@ class WordGame extends React.Component {
                   this.state.wordFourTry.substring(0, 3) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordFourTry.substring(4, 6) ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1392,7 +1517,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L4");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1419,7 +1546,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[15] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][15] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L4}</Text>
@@ -1427,7 +1555,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[16] == "" ? this.W4L5Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][16] == ""
+                ? this.W4L5Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1454,7 +1584,7 @@ class WordGame extends React.Component {
                   this.state.wordFourTry.substring(0, 4) +
                     this.state.choiceAnswer[this.state.tempIndex] +
                     this.state.wordFourTry.substring(5, 6) ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1465,7 +1595,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L5");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1492,7 +1624,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[16] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][16] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L5}</Text>
@@ -1500,7 +1633,9 @@ class WordGame extends React.Component {
 
           <TouchableOpacity
             style={
-              ShownLetters[17] == "" ? this.W4L6Style() : this.WordFourFull()
+              ShownLetters[this.props.WordGameNum][17] == ""
+                ? this.W4L6Style()
+                : this.WordFourFull()
             }
             onPress={() => {
               if (
@@ -1525,7 +1660,7 @@ class WordGame extends React.Component {
                 if (
                   this.state.wordFourTry.substring(0, 5) +
                     this.state.choiceAnswer[this.state.tempIndex] ==
-                  wordFourAnswer
+                  wordFourAnswer[this.props.WordGameNum]
                 ) {
                   if (this.state.score + 4 == 10) {
                     this.createWinAlert();
@@ -1536,7 +1671,9 @@ class WordGame extends React.Component {
                 }
                 this.state.choiceAnswer[this.state.tempIndex] = "";
                 this.state.tempIndex = -1;
-              } else if (this.state.wordFourTry != wordFourAnswer) {
+              } else if (
+                this.state.wordFourTry != wordFourAnswer[this.props.WordGameNum]
+              ) {
                 this.lightUpDragBlock();
                 this.lightUpBorderNotChosen("W4L6");
                 const newIds = this.state.choiceAnswer.slice(); //copy the array
@@ -1560,7 +1697,8 @@ class WordGame extends React.Component {
               }
             }}
             disabled={
-              ShownLetters[17] != "" || this.state.wordFourTry == wordFourAnswer
+              ShownLetters[this.props.WordGameNum][17] != "" ||
+              this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
             }
           >
             <Text style={styleShape.appButtonText}>{this.state.W4L6}</Text>
@@ -1741,12 +1879,12 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor:
-        this.state.wordOneTry == wordOneAnswer
+        this.state.wordOneTry == wordOneAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W1FullColor,
       borderWidth: 5,
       borderColor:
-        this.state.wordOneTry == wordOneAnswer
+        this.state.wordOneTry == wordOneAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W1FullColor
     };
@@ -1811,12 +1949,12 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor:
-        this.state.wordTwoTry == wordTwoAnswer
+        this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W2FullColor,
       borderWidth: 5,
       borderColor:
-        this.state.wordTwoTry == wordTwoAnswer
+        this.state.wordTwoTry == wordTwoAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W2FullColor
     };
@@ -1897,12 +2035,12 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor:
-        this.state.wordThreeTry == wordThreeAnswer
+        this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W3FullColor,
       borderWidth: 5,
       borderColor:
-        this.state.wordThreeTry == wordThreeAnswer
+        this.state.wordThreeTry == wordThreeAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W3FullColor
     };
@@ -1999,12 +2137,12 @@ class WordGame extends React.Component {
       borderRadius: 10,
       transform: [{ scaleX: 1 }, { scaleY: 1 }],
       backgroundColor:
-        this.state.wordFourTry == wordFourAnswer
+        this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W4FullColor,
       borderWidth: 5,
       borderColor:
-        this.state.wordFourTry == wordFourAnswer
+        this.state.wordFourTry == wordFourAnswer[this.props.WordGameNum]
           ? greenColor
           : this.state.W4FullColor
     };
