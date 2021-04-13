@@ -160,7 +160,7 @@ class MathGame extends React.Component {
 
     finish_game = (points) => {
         this.props.updatePoints(points, this.props.mathActive)
-        this.props.updatePlayerData('math', points)
+        this.props.updatePlayerData('math', points, this.props.mathActive)
         if (this.props.mathActive) {
             this.props.setMathActive(false);
         }
