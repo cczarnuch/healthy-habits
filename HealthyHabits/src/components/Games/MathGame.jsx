@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 import { Button, StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import CountDown from 'react-native-countdown-component';
 import {Ionicons} from '@expo/vector-icons';
@@ -19,6 +19,14 @@ class MathGame extends React.Component {
             actual_answer: 0,
             answers: [0, 0, 0, 0],
         };
+        this.handleBack = this.handleBack.bind(this);
+    }
+
+
+    //return to game menu
+    handleBack(){
+        this.props.setIndex(2);
+        this.props.setMain(true);
     }
 
     mix(array) {
@@ -150,17 +158,37 @@ class MathGame extends React.Component {
         this.generate_question()
     }
 
-    finish_game = () => {
-        this.props.updatePoints(10, this.props.mathActive)
-        this.props.updatePlayerData('math', 10)
+    finish_game = (points) => {
+        this.props.updatePoints(points, this.props.mathActive)
+        this.props.updatePlayerData('math', points)
+        if (this.props.mathActive) {
+            this.props.setMathActive(false);
+        }
         console.log('Returning to MountainView')
         this.props.setMain(true)
     }
 
     time_done = () => {
+        let average = 0;
+        if (this.state.correct == 0 && this.state.incorrect == 0) {
+            average = 0;
+        }
+        else {
+            average = Math.ceil((this.state.correct/(this.state.correct + this.state.incorrect))*100);
+        }
+
+        let points = 0;
+        let message = "";
+        if (average == 100) { points = 10; message = "Perfect score!"}
+        else if (average >= 80 && average < 100) { points = 8; message = "Great score!"}
+        else if (average >= 60 && average < 80) { points = 6; message = "Decent score!"}
+        else if (average >= 40 && average < 60) { points = 4; message = "Okay score!"}
+        else if (average >= 20 && average < 40) { points = 2; message = "Oh no!"}
+        else { points = 0; message = "Oh no!" }
+
         Alert.alert(
             'Time Done',
-            "You answered " + this.state.correct + " question(s) correctly!",
+            "Score: " + average + "%\n\n" + message + " Try again or exit to save progress.",
             [
                 {
                     text: "Try Again",
@@ -168,7 +196,7 @@ class MathGame extends React.Component {
                 },
                 {
                     text: "Save & Exit",
-                    onPress: () => this.finish_game(),
+                    onPress: () => this.finish_game(points),
                 }
 
             ]
@@ -182,12 +210,12 @@ render() {
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
                 barStyle="light-content"
-                leftComponent={<Ionicons
-                    name="arrow-back-outline" 
-                    color="#000" 
-                    style={back} 
+                leftComponent={
+                    <Icon  name="chevron-left" 
+                    color="white"  
                     size={30}
-                    onPress={() => this.props.setMain(true)}></Ionicons>}
+                    onPress={this.handleBack}>
+                    </Icon>}
                 centerComponent={{
                     text: "Math Game",
                     style: { color: "#FFF", fontSize: 26 }
