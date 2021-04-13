@@ -7,22 +7,17 @@ import styles from '../../styles/main.js';
 import journalBackground from '../../assets/gradient.jpg';
 import smiley from '../../assets/smileyrating.png';
 
-function displayMountainScreen() {
-    console.log("return to mountain pressed")
-
-}
-
-const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData }) => {
+const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData, setMain }) => {
     const [journalResponse, onChangeText] = React.useState(null);
     const [sliderVal, setSliderValue] = React.useState(0);
    
     function submitEntry(journalResponse, sliderVal){
         console.log("submit entry button pressed")
-       // console.log("response:", journalResponse, "sliderVal:", sliderVal)
+        // console.log("response:", journalResponse, "sliderVal:", sliderVal)
         // Send values to Game Controller
-        updatePlayerData('journal', journalResponse)
+        updatePlayerData('journal', [journalResponse, sliderVal])
         updatePoints(5, journalActive)
-        displayMountainScreen()
+        setMain(true)
     }
   
     return (
@@ -32,7 +27,7 @@ const JournalGame = ({ navigation, updatePoints, journalActive, updatePlayerData
             <Header
                 statusBarProps={{ barStyle: "light-content" }}
                 barStyle="light-content" // or directly
-                rightComponent={{}}
+                leftComponent={<Icon name="arrow-left" color="white" onPress={() => setMain(true)}></Icon> }
                 centerComponent={{
                 text: "Journal Entry",
                 style: { color: "#FFF", fontSize: 22 }
