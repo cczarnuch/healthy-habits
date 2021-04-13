@@ -18,6 +18,13 @@ export default class Setting extends Component{
     }
   }
 
+  componentDidMount(){
+    this.setState({
+      diff: this.props.diffculty,
+      dark: this.props.dark,
+    });
+  }
+
   updateChanges(setting, data){
     if (setting === "theme"){
       this.setState({

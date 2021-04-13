@@ -63,12 +63,14 @@ const App = () => {
 				setDisplay(
 					<MathGame
 						updatePoints={updatePoints}
-						setMain={setDisplay}
 						mathActive={mathActive}
-						updatePlayerData={updatePlayerData}
+						setMathActive={setMathActive}
+            updatePlayerData={updatePlayerData}
+						setIndex={setIndex}
+						setMain={setDisplay}
 					/>
 				);
-				setMathActive(false);
+				//setMathActive(false);
 				break;
 			case 3:
 				setDisplay(
@@ -143,12 +145,12 @@ const App = () => {
 	const updateSetting = (setting, data) => {
 		if (setting === "theme") {
 			setDark(() => {
-				// console.log("from App ", data);
+				console.log("from App ", data);
 				return data;
 			});
 		} else if (setting === "diff") {
 			setDiffculty(() => {
-				// console.log("from App ", data);
+				console.log("from App ", data);
 				return data;
 			});
 		}
