@@ -67,7 +67,10 @@ const CalendarPage = (props) => {
               if ("word" in props.playerData[day.dateString]) { word_log = props.playerData[day.dateString].word + " points"; }
               if ("memorization" in props.playerData[day.dateString]) { memorization_log = props.playerData[day.dateString].memorization + " points"; }
               if ("meditation" in props.playerData[day.dateString]) { meditation_log = props.playerData[day.dateString].meditation + " points"; }
-              if ("journal" in props.playerData[day.dateString]) { journal_log = props.playerData[day.dateString].journal; }            
+              if ("journal" in props.playerData[day.dateString]) { 
+                temp = props.playerData[day.dateString].journal; 
+                journal_log = "Mood was a " + temp[1] + " out of 10. " + temp[0]
+              }      
             }
             else { console.log("Date selected does not exist in playerData"); }
 
