@@ -26,7 +26,7 @@ const App = () => {
       word: "10",
       memorization: "10",
       //"meditation": "10",
-      journal: "Today sucked"
+      journal: ["Today sucked", 3]
     },
     "2021-04-10": {
       workout: "10",
@@ -34,7 +34,7 @@ const App = () => {
       word: "10",
       //"memorization": "10",
       //"meditation": "10",
-      journal: "I had a great day!"
+      journal: ["I had a great day!", 9]
     }
   });
 
@@ -102,14 +102,15 @@ const App = () => {
       //   setDisplay(<MeditationGame updatePoints={updatePoints} />)
       //   break;
       case 6:
-        setJournalActive(false);
         setDisplay(
           <JournalGame
             updatePoints={updatePoints}
             journalActive={journalActive}
             updatePlayerData={updatePlayerData}
+            setMain={setDisplay}
           />
         );
+        setJournalActive(false);
         break;
       default:
         setDisplay(true);
