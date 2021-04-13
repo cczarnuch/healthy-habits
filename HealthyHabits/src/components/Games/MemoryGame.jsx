@@ -205,7 +205,10 @@ export default class MemoryGame extends Component {
     this.stop();
     var points = 10 - Math.floor(Number(this.state.counter)/300)
     this.props.updatePoints(points, this.props.memoryActive)
-    this.props.updatePlayerData('memory', points)
+    this.props.updatePlayerData('memory', points, this.props.memoryActive)
+    if (this.props.memoryActive) {
+      this.props.setMemoryActive(false);
+    }
     Alert.alert(
       'Well Done!',
       "Your score is " + this.state.counter + this.state.miliseconds + 
