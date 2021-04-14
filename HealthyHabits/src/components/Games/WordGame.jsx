@@ -235,10 +235,6 @@ class WordGame extends React.Component {
     this.props.updatePoints(10, this.props.wordActive);
     this.props.updatePlayerData("word", 10, this.props.wordActive);
     Alert.alert("Great job!", "You are wordy of the crown :)", [
-      {
-        text: "Play Again",
-        onPress: () => console.log("Cancel Pressed")
-      },
       { text: "Game Menu", onPress: () => this.returnGameMenu() }
     ]);
   }
