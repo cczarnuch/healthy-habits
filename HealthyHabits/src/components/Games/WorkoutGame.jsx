@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native"; // Image will change to video
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import useTimer from '../hooks/useTimer';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header, Icon } from 'react-native-elements';
-
-import jumpingJacks from '../../assets/workouts/jj.png'
-import planks from '../../assets/workouts/p.png'
-import pushUps from '../../assets/workouts/pu.png'
-import sitUps from '../../assets/workouts/su.png'
+import { Video } from 'expo-av';
+import jumpingJacks from '../../assets/workouts/jj.mp4'
+import planks from '../../assets/workouts/p.mp4'
+import pushUps from '../../assets/workouts/pu.mp4'
+import sitUps from '../../assets/workouts/su.mp4'
 
 const WorkoutGame = ({ setMain, updatePoints, workoutActive, updatePlayerData, setIndex, setWorkoutActive }) => {
 	const [video, setVideo] = useState(null)
@@ -78,8 +78,15 @@ const WorkoutGame = ({ setMain, updatePoints, workoutActive, updatePlayerData, s
 					justifyContent: "space-around"
 				}}
 			/>
-			{ screen ? <View style={{alignItems: 'center'}}>
-				<Image style={styles.video} source={video} />
+			{ screen ? <View style={{ alignItems: 'center' }}>
+				<Video
+					source={video}
+					rate={1.0}
+					isMuted={true}
+					resizeMode="contain"
+					shouldPlay
+					style={{ width: 500, height: 300 }}
+				/>
 				<Text style={styles.txt}>{display}</Text>
 
 				<TouchableOpacity style={styles.bigButton} onPress={() => {
@@ -92,8 +99,15 @@ const WorkoutGame = ({ setMain, updatePoints, workoutActive, updatePlayerData, s
 				</TouchableOpacity>
 
 
-			</View> : <View style={{alignItems: 'center'}}>
-				<Image style={styles.video} source={video} />
+			</View> : <View style={{ alignItems: 'center' }}>
+				<Video
+					source={video}
+					rate={1.0}
+					isMuted={true}
+					resizeMode="contain"
+					shouldPlay
+					style={{ width: 500, height: 300 }}
+				/>
 				<Text style={styles.txt}>{formatTime(timer)}</Text>
 
 				<TouchableOpacity style={styles.bigButton} disabled={isActive} onPress={handleContinue}>
@@ -129,7 +143,7 @@ const styles = StyleSheet.create({
 	},
 	video: {
 		width: '100%',
-		height: undefined,
+		height: '100%',
 		aspectRatio: 1,
 	},
 	but: {
